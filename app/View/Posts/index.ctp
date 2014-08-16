@@ -4,7 +4,9 @@ $this->Html->css("posts", null,array("inline"=>false));
 ?>
 
 <!-- Here is where we loop through our $posts array, printing out post info -->
-<?php echo $this->Html->link(
+<?php 
+    echo $this->Session->flash();
+    echo $this->Html->link(
     'Ajouter un Post',
     array('controller' => 'posts', 'action' => 'add')
 ); ?>
