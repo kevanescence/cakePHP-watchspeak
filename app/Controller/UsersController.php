@@ -11,8 +11,6 @@ class UsersController extends AppController {
     public function login() {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
-                die("");
-                debug($this->Auth->redirect);die("");
                 return $this->redirect($this->Auth->redirect());
             } else {
                 $this->Session->setFlash(__("Nom d'user ou mot de passe invalide, réessayer"));
@@ -20,8 +18,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function logout() {        
-        die("logout");
+    public function logout() {
         return $this->redirect($this->Auth->logout());
     }
 
