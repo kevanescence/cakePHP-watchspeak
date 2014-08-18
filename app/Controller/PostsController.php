@@ -24,6 +24,7 @@ class PostsController extends AppController {
 
     public function add() {
         if ($this->request->is('post')) {
+            $this->request->data['Post']['user_id'] = $this->Auth->user("id");
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
                 $this->Session->setFlash(__('Your post has been saved.'));
@@ -67,6 +68,25 @@ class PostsController extends AppController {
             );
             return $this->redirect(array('action' => 'index'));
         }
+    }
+
+    // app/Controller/PostsController.php
+
+    public function isAuthorized($user) {
+        // Tous les users inscrits peuvent ajouter les posts
+        if ($this->action === 'add') {
+            return true;
+        }
+
+        // Le propriétaire du post peut l'éditer et le supprimer
+        if (in_array($this->action, array('edit', 'delete'))) {
+            $postId = (int) $this->request->params['pass'][0];
+            if ($this->Post->isOwnedBy($postId, $user['id'])) {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
     }
 
 //    public function index($id){
