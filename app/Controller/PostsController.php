@@ -3,8 +3,7 @@
 class PostsController extends AppController {
 
     //public $scaffold;
-    public $helpers = array('Html', 'Form', 'Session');
-    public $components = array('Session');
+    public $helpers = array('Html', 'Form', 'Session');    
 
     public function index() {
         $this->set('posts', $this->Post->find('all'));
@@ -24,7 +23,8 @@ class PostsController extends AppController {
 
     public function add() {
         if ($this->request->is('post')) {
-            $this->Post->create();
+            $this->Post->create();            
+            $this->request->data['Post']['user_id'] = $this->Auth->user('id'); //Ligne ajoutée
             if ($this->Post->save($this->request->data)) {
                 $this->Session->setFlash(__('Your post has been saved.'));
                 return $this->redirect(array('action' => 'index'));
@@ -68,6 +68,32 @@ class PostsController extends AppController {
             return $this->redirect(array('action' => 'index'));
         }
     }
+    
+    // app/Controller/PostsController.php
+
+public function isAuthorized($user) {
+    // Tous les users inscrits peuvent ajouter les posts
+    if ($this->action === 'add') {
+        return true;
+    }
+//if (isset($user['role']) && $user['role'] === 'admin') {
+//            return true;
+//        }
+    // Le propriétaire du post peut l'éditer et le supprimer
+    if (in_array($this->action, array('edit', 'delete'))) {
+                
+        $postId = (int) $this->request->params['pass'][0];        
+        if ($this->Post->isOwnedBy($postId, $user['id'])) {            
+            return true;
+        }
+    }
+//    return false;
+    return parent::isAuthorized($user);
+}
+//public function beforeFilter() {
+//    parent::beforeFilter();
+//    //$this->allow("add");
+//}
 
 //    public function index($id){
 //        $this->set("postId",$id);

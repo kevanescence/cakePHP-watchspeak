@@ -5,7 +5,7 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add', 'logout');
+        $this->Auth->allow('add', 'logout','login');
     }
 
     public function login() {
@@ -79,5 +79,5 @@ class UsersController extends AppController {
         $this->Session->setFlash(__('L\'user n\'a pas été supprimé'));
         return $this->redirect(array('action' => 'index'));
     }
-
+    
 }
