@@ -46,19 +46,15 @@
     </div>
 
     <div class="container">
-
-      <div class="starter-template">   
+     
         <?php echo $this->fetch("content");?>
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-      </div>
 
     </div><!-- /.container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <?php echo $this->Html->script("https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js");?>    
-    <!-- Include all compiled plugins (below), or include individual files as needed -->    
+    <?php echo $this->Html->script("jquery.min");?>    
+    <!-- Bootstrap and other plugins -->    
     <?php echo $this->Html->script("bootstrap.min");?>
-    <!-- Include all script of the page -->
+    <!-- Include all scripts of the page -->
     <?php $this->fetch("script");?>
   </body>
 </html>
