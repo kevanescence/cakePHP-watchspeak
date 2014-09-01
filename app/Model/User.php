@@ -45,10 +45,13 @@ class User extends AppModel {
                 'message' => 'Entre 5 et 15 caractères'
             )
         ),
-        'email' => 'email',
+        'email' => array(
+            'rule' => "email",
+            'message' => 'Veuillez entrer un mail valide'
+        ),
         'birthday' => array(
             'rule'       => 'date',
-            'message'    => 'Entrez une date valide',            
+            'message'    => 'Entrez une date valide',
         ),
         'sexe' => array(
             'valid' => array(

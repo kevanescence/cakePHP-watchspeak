@@ -1,23 +1,10 @@
-<!-- app/View/Users/add.ctp -->
-<div class="users form col-lg-6">
-    <?php echo $this->Form->create('User', array("class" => "toto")); ?>
-    <fieldset>
-        <legend><?php echo __('Ajouter User'); ?></legend>
-        <?php
-        echo $this->Form->input('username');
-        echo $this->Form->input('password');
-        echo $this->Form->input('role', array(
-            'options' => array('admin' => 'Admin', 'auteur' => 'Auteur')
-        ));
-        ?>
-    </fieldset>
-<?php echo $this->Form->end(__('Ajouter')); ?>
-</div>
+<div class="col-lg-4 col-md-4 col-sm-3"></div>
 <?php 
-    echo $this->Form->create('User', array("class" => "form-signin col-lg-4",
+    echo $this->Form->create('User', array("class" => "form-signin col-lg-4 " .
+                                                       "col-md-4 col-sm-6 col-xs-12",
                                              "role" => "form"));     
 ?>
-    <h2 class="form-signin-heading">S'inscrire</h2>    
+    <h2 class="form-signup-heading">S'inscrire</h2>    
 <?php
     echo $this->Form->input("email", array("class" => "form-control",
                                            "label" => "Votre email*",

@@ -5,7 +5,7 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add', 'logout','login');
+        $this->Auth->allow('add', 'logout', 'login');
     }
 
     public function login() {
@@ -35,11 +35,24 @@ class UsersController extends AppController {
         $this->set('user', $this->User->read(null, $id));
     }
 
+    /**
+     * Add a user considering the data posted. If success, log the user in and
+     * redirect to the users' index page.
+     * @return type
+     */
     public function add() {
+        //If something is posted
         if ($this->request->is('post')) {
             $this->User->create();
+            //Try to save the user
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('L\'user a été sauvegardé'));
+                $this->Session->setFlash(__('Vous voilà inscrit'));
+                //Connect him and redirect
+                $id = $this->User->id;
+                $this->request->data['User'] = array_merge(
+                        $this->request->data['User'], array('id' => $id)
+                );
+                $this->Auth->login($this->request->data['User']);                
                 return $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('L\'user n\'a pas été sauvegardé. Merci de réessayer.'));
@@ -79,5 +92,5 @@ class UsersController extends AppController {
         $this->Session->setFlash(__('L\'user n\'a pas été supprimé'));
         return $this->redirect(array('action' => 'index'));
     }
-    
+
 }
