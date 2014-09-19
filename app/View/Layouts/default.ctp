@@ -27,7 +27,8 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" 
+                  data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -36,11 +37,27 @@
           <a class="navbar-brand" href="#">Project name</a>
         </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <?php            
+                    if($this->Session->read('Auth.User.username')){
+                        $option =  array(
+                                    'controller' => 'Users',
+                                    'action' => 'logout',
+                                    'class' => ''
+                                    );
+                        echo $this->Html->tag("li",$this->Html->link('Déconnexion',$option));              
+                    }
+                ?>
+            </ul>
+            <?php
+                if(!$this->Session->read('Auth.User.username')){
+                    $css = 'navbar-form navbar-right';
+                    echo $this->element("Users/login",array('cssClass'=>$css));
+                }
+                ?>
         </div><!--/.nav-collapse -->
       </div>
     </div>

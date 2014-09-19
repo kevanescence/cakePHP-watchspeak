@@ -5,3 +5,10 @@
 body {
     padding-top:60px;
 }
+
+.navbar form legend, .navbar form label{
+    display: none;
+}
+.navbar form input {
+    margin-left: 5px; //TOBE imrpoved
+}
