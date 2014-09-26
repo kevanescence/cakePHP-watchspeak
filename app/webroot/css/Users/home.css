@@ -1,0 +1,198 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19 sept. 2014, 16:13:37
+    Author     : kremy
+*/
+
+/* ribbon style */
+#recent-posts {
+    padding-top:1em;
+    margin-right: 40px;
+    border-color: black;    
+    background-color: #EEEEEE;
+}
+ .ribbon-wrapper {
+    position: relative;
+    margin-bottom: 1em;
+}
+  .ribbon-front {
+    background-color: #125DCD;  height: 20px;
+    position: relative;
+    left:-20px;
+    /*width:calc(100% + 20px);*/
+    z-index: 2;
+    color:white;
+    text-align:center;
+}
+ 
+  .ribbon-front,
+  .ribbon-back-left,
+  .ribbon-back-right
+{
+    -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+    -khtml-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+    -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+    -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+}
+ 
+  .ribbon-edge-topleft,
+  .ribbon-edge-topright,
+  .ribbon-edge-bottomleft,
+  .ribbon-edge-bottomright {
+    position: absolute;
+    z-index: 1;
+    border-style:solid;
+    height:0px;
+    width:0px;
+}
+ 
+  .ribbon-edge-topleft,
+  .ribbon-edge-topright {
+}
+ 
+  .ribbon-edge-bottomleft,
+  .ribbon-edge-bottomright {
+    top: 20px;
+}
+ 
+  .ribbon-edge-topleft,
+  .ribbon-edge-bottomleft {
+    left: -20px;
+    border-color: transparent #4E8FFF transparent transparent;
+}
+ 
+  .ribbon-edge-topleft {
+    top: 0px;
+    border-width: 0px 20px 0 0;
+}
+  .ribbon-edge-bottomleft {
+    border-width: 0 20px 15px 0;
+}
+ 
+  .ribbon-edge-topright,
+  .ribbon-edge-bottomright {
+    /*left: 600px;*/
+    right:20px;
+    border-color: transparent transparent transparent #4E8FFF;
+}
+ 
+  .ribbon-edge-topright {
+    top: 0px;
+    border-width: 0px 0 0 20px;
+}
+  .ribbon-edge-bottomright {
+    border-width: 0 0 15px 20px;
+}
+ 
+  .ribbon-back-left {
+    position: absolute;
+    top: 15px;
+    left: 0px;
+    width: 0px;
+    height: 20px;
+    background-color: #C91717;  z-index: 0;
+}
+ 
+  .ribbon-back-right {
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    width: 0px;
+    height: 20px;
+    background-color: #DA1E1E;  z-index: 0;
+}
+ 
+/*End ribbon style*/
+
+/* ribbon style */
+/*
+ .ribbon-wrapper {
+	position: relative;
+}
+  .ribbon-front {
+	background-color: #ccf;	height: 40px;
+	width: 140px;
+	position: relative;
+	left:-20px;
+	z-index: 2;
+}
+
+  .ribbon-front,
+  .ribbon-back-left,
+  .ribbon-back-right
+{
+	-moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+	-khtml-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+	-webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+	-o-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+}
+
+  .ribbon-edge-topleft,
+  .ribbon-edge-topright,
+  .ribbon-edge-bottomleft,
+  .ribbon-edge-bottomright {
+	position: absolute;
+	z-index: 1;
+	border-style:solid;
+	height:0px;
+	width:0px;
+}
+
+  .ribbon-edge-topleft,
+  .ribbon-edge-topright {
+}
+
+  .ribbon-edge-bottomleft,
+  .ribbon-edge-bottomright {
+	top: 40px;
+}
+
+  .ribbon-edge-topleft,
+  .ribbon-edge-bottomleft {
+	left: -20px;
+	border-color: transparent #99c transparent transparent;
+}
+
+  .ribbon-edge-topleft {
+	top: -10px;
+	border-width: 10px 20px 0 0;
+}
+  .ribbon-edge-bottomleft {
+	border-width: 0 20px 0px 0;
+}
+
+  .ribbon-edge-topright,
+  .ribbon-edge-bottomright {
+	left: 100px;
+	border-color: transparent transparent transparent #99c;
+}
+
+  .ribbon-edge-topright {
+	top: -10px;
+	border-width: 10px 0 0 20px;
+}
+  .ribbon-edge-bottomright {
+	border-width: 0 0 0px 20px;
+}
+
+  .ribbon-back-left {
+	position: absolute;
+	top: -10px;
+	left: 0px;
+	width: 0px;
+	height: 40px;
+		z-index: 0;
+}
+
+  .ribbon-back-right {
+	position: absolute;
+	top: -10px;
+	right: 0px;
+	width: 0px;
+	height: 40px;
+		z-index: 0;
+}*/

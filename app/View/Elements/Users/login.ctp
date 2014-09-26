@@ -16,5 +16,9 @@
         'class' => 'btn btn-success',
         'div' => false
     );
+    $errMsg = $this->Session->flash();    
+    if($errMsg != "") {       
+        echo $this->element('Messages/alert', array('textMessage' => $errMsg));
+    }
     echo $this->Form->end($options); ?>
 </fieldset>

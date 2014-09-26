@@ -1,0 +1,42 @@
+/* 
+    The posts view CSS
+    Created on : 15 août 2014, 17:10:10
+    Author     : kremy
+*/
+#PostAddForm textarea {
+    width:80%;
+    height: 2.5em;
+    display:inline-block;    
+    vertical-align: top;
+}
+#PostAddForm textarea:focus{
+    height:5em;
+    transition: height 0.3s ease-in;
+}
+#PostAddForm input.btn {
+    display:inline-block;
+    vertical-align: middle;
+}
+
+article.post {
+    width: 80%;
+    margin-left:5%;
+    margin-top: 1em;    
+    border-radius:5px;
+    position:relative;
+    text-align: justify;
+    padding-left: 4px;
+    padding-right: 10px;
+    
+    color:#062A99;
+    background-color: #C7CEDB;
+    background-image: -moz-linear-gradient(#fff, #C7CEDB);
+    
+    -moz-border-radius:5px;    
+    border-radius:5px;
+                
+    -moz-box-shadow: 1pt 2px 1px rgba(0, 0, 255, 0.2), -2px 1px 1px rgba(0, 0, 255, 0.1);
+    -webkit-box-shadow: 1pt 2px 1px rgba(0, 0, 255, 0.2), -2px 1px 1px rgba(0, 0, 255, 0.1);
+    box-shadow: 1pt 2px 1px rgba(0, 0, 255, 0.2), -2px 1px 1px rgba(0, 0, 255, 0.1);
+    
+}
