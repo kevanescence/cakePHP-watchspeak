@@ -24,6 +24,10 @@ class UsersController extends AppController {
 
     public function index() {
         $this->User->recursive = 0;
+        
+        $option = array('order' => array('created DESC'));        
+        $this->set('posts', $this->User->UserPosts->find('all', $option));
+        
         $this->set('users', $this->paginate());
     }
 

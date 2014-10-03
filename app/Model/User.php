@@ -67,7 +67,14 @@ class User extends AppModel {
             )
         )
     );
-
+    
+    public $hasMany = array(
+        'UserPosts' => array(
+            'className' => 'Post',
+            'order' => array('User.id' => 'DESC')            
+        )
+    );
+    
     public function beforeSave($options = array()) {
         if (isset($this->data[$this->alias]['password'])) {
             $passwordHasher = new SimplePasswordHasher();
@@ -77,7 +84,7 @@ class User extends AppModel {
         }
         return true;
     }
-
+    
 }
 
 ?>

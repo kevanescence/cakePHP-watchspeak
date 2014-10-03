@@ -40,3 +40,51 @@ article.post {
     box-shadow: 1pt 2px 1px rgba(0, 0, 255, 0.2), -2px 1px 1px rgba(0, 0, 255, 0.1);
     
 }
+
+article a.author {
+    font-size:1.2em;
+    color:#125DCD;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+article time {
+    color:darkgreen;
+    font-style: italic;
+    margin-left:2em;
+}
+
+/* Define the corner properties */
+article.post a.corner{
+    content: "";
+    position: absolute;
+    right:0px;
+    top:0px;
+    border-style: solid;
+    border-width: 0px 30px 30px 0px;
+    height: 0px;
+    width: 0px;
+    display: block;
+    box-shadow: 0pt 2px 1px rgba(0, 0, 0, 0.2), -2px 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 0px 5px;
+    border-color:#EEEEEE #EEEEEE #125DCD #125DCD ;
+    border-width:11px;
+    overflow: hidden;
+    text-align:center;
+}
+article.post:hover a.corner.fold{
+    box-shadow:none;
+    border-style:none;
+    background-color:transparent;
+    width:22px;
+    height:22px;
+    color:#cd0a0a;
+    text-decoration: none;
+    background-color:#C7CEDB;
+    border-radius: 0 5px 0 5px;
+    transition:background-color 0.5s linear;
+    cursor: pointer;
+ 
+}
+
+/* End of the corner properties */

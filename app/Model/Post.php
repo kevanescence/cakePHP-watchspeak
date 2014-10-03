@@ -22,6 +22,14 @@ class Post extends AppModel {
         )
     );
     
+    public $belongsTo = array(
+        'owner' => array(
+            'className' => 'User',
+            'foreignKey' => 'user_id',
+            'fields'=> 'username'
+        )
+    );
+    
     // app/Model/Post.php
 
 public function isOwnedBy($post, $user) {

@@ -15,8 +15,15 @@
         <div class="ribbon-back-right"></div>
         <div id="recent-posts">
             <?php 
-            echo $this->element('Posts/create');            
-            echo $this->element('Posts/view');
+            echo $this->element('Posts/create');               
+            foreach ($posts as $post):                
+                $option = array(
+                  'message' => $post['UserPosts']['body'],
+                  'author'  => $post['owner']['username'],
+                  'created' => $post['UserPosts']['created'],
+                );
+                echo $this->element('Posts/view', $option);
+            endforeach;
             ?>
         </div>
     </div>
