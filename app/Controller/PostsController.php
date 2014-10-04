@@ -4,9 +4,19 @@ class PostsController extends AppController {
 
     //public $scaffold;
     public $helpers = array('Html', 'Form', 'Session');    
-
+    public $components = array('Paginator');
+    
+    public $paginate = array(
+        'limit' => 2,
+        'order' => array(
+            'Post.title' => 'asc'
+        )
+    );
+    
     public function index() {
-        $this->set('posts', $this->Post->find('all'));
+        //$this->set('posts', $this->Post->find('all'));
+        $this->Paginator->settings = $this->paginate;
+        $this->set('posts',$this->Paginator->paginate());
     }
 
     public function view($id = null) {

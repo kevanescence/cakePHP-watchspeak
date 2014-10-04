@@ -69,6 +69,6 @@
     <!-- Bootstrap and other plugins -->    
     <?php echo $this->Html->script("bootstrap.min");?>
     <!-- Include all scripts of the page -->
-    <?php $this->fetch("script");?>
+    <?php echo $this->fetch("script");?>
   </body>
 </html>

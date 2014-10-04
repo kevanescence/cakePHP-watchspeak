@@ -1,31 +1,44 @@
-<?php 
-$this->assign("title","PostsIndex");
-$this->Html->css("posts", null,array("inline"=>false));
+<!--Bienvenue<br/>-->
+<?php $this->append("css", $this->Html->css("Users/home")); 
+$this->append("script", $this->Html->script("Posts/home"));
 ?>
-
-<!-- Here is where we loop through our $posts array, printing out post info -->
-<?php 
-    echo $this->Session->flash();
-    echo $this->Html->link(
-    'Ajouter un Post',
-    array('controller' => 'posts', 'action' => 'add')
-); ?>
-    <?php foreach ($posts as $post): ?>
-    <div>
-        <?php echo $post['Post']['id']; ?>
-            <?php echo $this->Html->link($post['Post']['title'],
-            array('controller' => 'posts', 'action' => 'view', $post['Post']['id'])); ?>
-
-    <?php echo $post['Post']['created']; ?>
-        <?php echo $this->Html->link(
-                'Editer',
-                array('action' => 'edit', $post['Post']['id'])
-            ); ?>
-        <?php echo $this->Form->postLink(
-                'Supprimer',
-                array('action' => 'delete', $post['Post']['id']),
-                array('confirm' => 'Etes-vous sûr ?'));
-            ?>
+<?= $this->Session->read('Auth.User.username'); ?>
+<br/><div class="col-lg-4 col-md-4"></div>
+<section title="actualités" class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+    <div class="ribbon-wrapper">
+        <header class="ribbon-front">
+            Actualités de vos amis
+        </header>
+        <div class="ribbon-edge-topleft"></div>
+        <div class="ribbon-edge-topright"></div>
+        <div class="ribbon-edge-bottomleft"></div>
+        <div class="ribbon-edge-bottomright"></div>
+        <div class="ribbon-back-left"></div>
+        <div class="ribbon-back-right"></div>
+        <div id="recent-posts">
+            <?php 
+            echo $this->element('Posts/create');               
+            foreach ($posts as $post):                
+                $option = array(
+                  'message' => $post['Post']['body'],
+                  'author'  => $post['owner']['username'],
+                  'created' => $post['Post']['created'],
+                  'id'      => $post['Post']['id']
+                );
+                echo $this->element('Posts/view', $option);
+            endforeach;         
+            ?> <ul class="pagination pagination-md">
+            <?php
+                echo $this->Paginator->prev("<<",array('tag' => "li",
+                                                       'title' => 'Page précédente'));
+                echo $this->Paginator->numbers(array('tag' => "li",
+                                                'separator' => false,
+                                                'class' => 'disable',
+                                                'currentClass' => 'active'
+                                                ));
+               echo $this->Paginator->next(">>",array('tag' => "li",
+                                                      'title' => 'Page suivante'));
+            ?> </ul>      
+        </div>
     </div>
-    <?php endforeach; 
-    unset($post);
+</section>

@@ -25,7 +25,12 @@ class UsersController extends AppController {
     public function index() {
         $this->User->recursive = 0;
         
-        $option = array('order' => array('created DESC'));        
+        $option = array('order' => array('created DESC'),
+                        'limit' => '5');        
+        //$data = $this->Paginator->paginate('Recipe');
+        //$this->Paginator->settings = $this->User->UserPosts->paginate;
+        //$this->set('posts', $this->Paginator->paginate());//User->UserPosts->find('all', $option));
+        //$this->Paginator->settings = $this->paginate;
         $this->set('posts', $this->User->UserPosts->find('all', $option));
         
         $this->set('users', $this->paginate());
