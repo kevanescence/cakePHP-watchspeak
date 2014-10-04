@@ -28,7 +28,8 @@ class PostsController extends AppController {
             $this->request->data['Post']['title'] = 'bliliblil';
             if ($this->Post->save($this->request->data)) {
                 $this->Session->setFlash(__('Your post has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('controller' => 'Users',
+                                              'action' => 'index'));
             }
             $this->Session->setFlash(__('Unable to add your post.'));
         }
@@ -66,7 +67,8 @@ class PostsController extends AppController {
             $this->Session->setFlash(
                     __('Le post avec id : %s a été supprimé.', h($id))
             );
-            return $this->redirect(array('action' => 'index'));
+            return $this->redirect(array('controller' => 'users',
+                                         'action' => 'index'));
         }
     }
     

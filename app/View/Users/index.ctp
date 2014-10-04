@@ -21,6 +21,7 @@
                   'message' => $post['UserPosts']['body'],
                   'author'  => $post['owner']['username'],
                   'created' => $post['UserPosts']['created'],
+                  'id'      => $post['UserPosts']['id']
                 );
                 echo $this->element('Posts/view', $option);
             endforeach;
