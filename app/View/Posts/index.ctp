@@ -27,7 +27,7 @@ $this->append("script", $this->Html->script("Posts/home"));
                 );
                 echo $this->element('Posts/view', $option);
             endforeach;         
-            ?> <ul class="pagination pagination-md">
+            ?> <ul class="pagination pagination-md col-md-offset-4">
             <?php
                 echo $this->Paginator->prev("<<",array('tag' => "li",
                                                        'title' => 'Page précédente'));

@@ -8,13 +8,14 @@ and open the template in the editor.
     Author     : kremy
 */
 
-/* ribbon style */
+
 #recent-posts {
     padding-top:1em;
     margin-right: 40px;
     border-color: black;    
     background-color: #EEEEEE;
 }
+/* ribbon style */
  .ribbon-wrapper {
     position: relative;
     margin-bottom: 1em;

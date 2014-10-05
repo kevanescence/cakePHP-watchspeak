@@ -1,7 +1,11 @@
 <!-- Fichier : /app/View/Posts/view.ctp -->
-
-<h1><?php echo h($post['Post']['title']); ?></h1>
-
-<p><small>Créé le : <?php echo $post['Post']['created']; ?></small></p>
-
-<p><?php echo h($post['Post']['body']); ?></p>
+<?php
+$this->append("css", $this->Html->css("Posts/posts"));
+$option = array(
+    'message' => $post['Post']['body'],
+    'author' => $post['owner']['username'],
+    'created' => $post['Post']['created'],
+    'id' => $post['Post']['id']
+);
+echo $this->element("Posts/view", $option);
+?>
