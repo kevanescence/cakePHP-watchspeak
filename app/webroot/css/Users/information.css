@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10 oct. 2014, 22:05:36
+    Author     : kremy
+*/
+
+.input-group {
+    margin-top:0.5em;
+    
+}
+
+img {
+    border-radius: 50%;    
+    margin:auto;
+}
+
+input#btn-save-info {
+    margin-top:1em;
+    position: absolute;
+    right:5%;
+}
+
+input#btn-add-friend {
+    margin:auto;
+}
+#UserSexeF {
+    margin-left: 1em;
+}

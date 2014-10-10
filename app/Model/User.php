@@ -71,7 +71,7 @@ class User extends AppModel {
     public $hasMany = array(
         'UserPosts' => array(
             'className' => 'Post',
-            'order' => array('User.id' => 'DESC')            
+            'order' => array('id' => 'DESC')            
         )
     );
     

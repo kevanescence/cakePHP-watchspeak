@@ -30,6 +30,13 @@ class Post extends AppModel {
         )
     );
     
+    public $hasMany = array(
+        'post_comments' => array(
+            'className' => 'Comment',
+            'order' => array('post_comments.id' => 'DESC')            
+        )
+    );
+    
     // app/Model/Post.php
 
 public function isOwnedBy($post, $user) {

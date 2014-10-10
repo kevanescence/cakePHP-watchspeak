@@ -5,9 +5,22 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add', 'logout', 'login');
+        $this->Auth->allow('add', 'logout', 'login');        
+        //$this->Auth->deny('view');
     }
-
+    
+    public function isAuthorized($user) {        
+        // For view actions, current user has to be the integorated one ...        
+        if (in_array($this->action, array('view','edit'))) {
+            return true;
+            $userId = (int) $this->request->params['pass'][0];
+            if ($userId == $this->Auth->user('id')) {
+                return true;
+            }
+        }
+        // .. or have the default rules
+        return parent::isAuthorized($user);
+    }
     public function login() {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
@@ -36,12 +49,12 @@ class UsersController extends AppController {
         $this->set('users', $this->paginate());
     }
 
-    public function view($id = null) {
+    public function view($id = null) {        
         $this->User->id = $id;
         if (!$this->User->exists()) {
             throw new NotFoundException(__('User invalide'));
-        }
-        $this->set('user', $this->User->read(null, $id));
+        }        
+        $this->set('user', $this->User->read(null,$id)); 
     }
 
     /**

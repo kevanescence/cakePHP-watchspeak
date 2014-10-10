@@ -9,4 +9,5 @@
                array('class' => 'corner fold delete',
                      'confirm' => 'Etes-vous sûr ?'));?>
     <p><?=$message?></p>
+    <a href="#" class="display-comments"><?=$nbComments?></a>
 </article>

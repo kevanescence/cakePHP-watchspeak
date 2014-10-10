@@ -23,7 +23,8 @@ $this->append("script", $this->Html->script("Posts/home"));
                   'message' => $post['Post']['body'],
                   'author'  => $post['owner']['username'],
                   'created' => $post['Post']['created'],
-                  'id'      => $post['Post']['id']
+                  'id'      => $post['Post']['id'],
+                  'nbComments' => $post['Post']['nbComments']
                 );
                 echo $this->element('Posts/view', $option);
             endforeach;         
