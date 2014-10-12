@@ -22,6 +22,7 @@ $this->append("script", $this->Html->script("Posts/home"));
                 $option = array(
                   'message' => $post['Post']['body'],
                   'author'  => $post['owner']['username'],
+                  'author_id'  => $post['owner']['id'],
                   'created' => $post['Post']['created'],
                   'id'      => $post['Post']['id'],
                   'nbComments' => $post['Post']['nbComments']

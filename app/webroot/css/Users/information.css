@@ -20,12 +20,24 @@ img {
 
 input#btn-save-info {
     margin-top:1em;
-    position: absolute;
+    margin-left:60%;
+    //position: absolute;
     right:5%;
 }
 
-input#btn-add-friend {
-    margin:auto;
+.container.tab-pane {    
+    padding: 1em;
+    background-color: #f0f0f0;
+    border-color: #ddd;
+    border-style: solid;    
+    border-width: 0 1px 1px 1px;
+}
+
+div.col-md-3 {
+    text-align: center;
+}
+#btn-add-friend {
+    margin-top:1em;
 }
 #UserSexeF {
     margin-left: 1em;

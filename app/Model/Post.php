@@ -26,7 +26,7 @@ class Post extends AppModel {
         'owner' => array(
             'className' => 'User',
             'foreignKey' => 'user_id',
-            'fields'=> 'username'
+            'fields'=> array('username','id')
         )
     );
     

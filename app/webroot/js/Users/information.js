@@ -6,3 +6,11 @@
 //Remove the scores put by cakePHP on dates
 var tmp = $("#birthdayDiv").children().clone();
 $("#birthdayDiv").html(tmp);
+$('.nav.nav-pills').click(function(e) {
+    e.preventDefault();
+    $(this).tab('show');
+})
+
+$('ul.pagination li.active,ul.pagination li.next, ul.pagination li.prev ')
+        .wrapInner('<a></a>').find('a')
+        .append('<span class="sr-only">(current)</span>');

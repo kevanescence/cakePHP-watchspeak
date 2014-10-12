@@ -1,5 +1,8 @@
 <article class="post" title="">
-    <a class="author" title="Voir son profil"><?=$author?></a>
+    <a class="author" href="<?= $this->Html->url(array('controller' => 'Users',
+                                                       'action' => 'view',
+                                                        $author_id, 'infos'));?>"
+             title="Voir son profil"><?=$author?></a>
     <time datetime="2014-10-03">
         <?= "le " . date("d F Y \à H:i:s",strtotime($created))?>
     </time>
