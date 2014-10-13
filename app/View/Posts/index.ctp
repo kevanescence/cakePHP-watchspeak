@@ -31,15 +31,21 @@ $this->append("script", $this->Html->script("Posts/home"));
             endforeach;         
             ?> <ul class="pagination pagination-md col-md-offset-4">
             <?php
-                echo $this->Paginator->prev("<<",array('tag' => "li",
+                if(count($posts) >= 0) {
+                    echo $this->Paginator->prev("<<",array('tag' => "li",
                                                        'title' => 'Page précédente'));
-                echo $this->Paginator->numbers(array('tag' => "li",
-                                                'separator' => false,
-                                                'class' => 'disable',
-                                                'currentClass' => 'active'
-                                                ));
-               echo $this->Paginator->next(">>",array('tag' => "li",
-                                                      'title' => 'Page suivante'));
+                    echo $this->Paginator->numbers(array('tag' => "li",
+                                                    'separator' => false,
+                                                    'class' => 'disable',
+                                                    'currentClass' => 'active'
+                                                    ));
+                    echo $this->Paginator->next(">>",array('tag' => "li",
+                                                          'title' => 'Page suivante'));
+                }
+                else {
+                    echo $this->element('Messages/alert-info', 
+                                        array('text' => 'Pas de publication.'));
+                }
             ?> </ul>      
         </div>
     </div>
