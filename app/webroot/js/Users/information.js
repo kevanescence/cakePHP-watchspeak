@@ -8,14 +8,19 @@ $('.nav.nav-tabs').click(function(e) {
     $(this).tab('show');    
 });
 
-$('ul.pagination li').find('a').each(function(){
+$('ul.pagination li').find('a').each(function(){   
    var a = $(this);
-   var url = $(this).attr('href');
-   url = url.replace(/\/?(infos|publications|friends)?\/?page/g,'/publications/page');
+   var url = $(this).attr('href');   
+   console.log("Je suis dans le lien" + url);
+   
+   var tab = a.parentsUntil('#infos, #publications, #friends')
+              .parent().attr('id');
+   console.log(tab);
+   url = url.replace(/\/?(infos|publications|friends)?\/?page/g,'/' + tab + '/page');
    console.log(url);
    a.attr("href",url);
 });
-//Change url when tab is changed (without reloading page)
+////Change url when tab is changed (without reloading page)
 $('.nav.nav-tabs a').click(function(e) {    
     var url = window.location.href + "";
     var tab = $(this).attr("href");
@@ -25,6 +30,11 @@ $('.nav.nav-tabs a').click(function(e) {
 });
 
 //Allow to have the same bootstrap style for the current page
-$('ul.pagination li.active,ul.pagination li.next, ul.pagination li.prev ')
+function updatePagination(selector){
+var selPagination = selector + ' ul.pagination';
+$(selPagination + ' li.active,' + selPagination + ' li.next,' + selPagination + ' li.prev ')
         .wrapInner('<a></a>').find('a')
         .append('<span class="sr-only">(current)</span>');
+}
+updatePagination("#content");
+updatePagination("#publications-content");

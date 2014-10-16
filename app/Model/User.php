@@ -6,6 +6,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 class User extends AppModel {
 
+    public $recursive = -1;
     public $name = 'User';
     public $validate = array(
         'username' => array(
@@ -73,6 +74,17 @@ class User extends AppModel {
             'className' => 'Post',
             'order' => array('id' => 'DESC')            
         )
+    );
+    
+    public $hasAndBelongsToMany = array(
+        'friends1' =>
+            array(
+                'className' => 'User',
+                'joinTable' => 'friends',
+                'foreignKey' => 'sends_id',
+                'associationForeignKey' => 'receives_id',
+                'unique' => false
+            )
     );
     
     public function beforeSave($options = array()) {

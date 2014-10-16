@@ -11,8 +11,8 @@
         echo $this->Html->css("bootstrap.min");
         echo $this->Html->css("common");
         echo $this->fetch("css");
-    ?>
-    
+        echo $this->Html->script("jquery.min");
+    ?>  
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -61,14 +61,13 @@
 
     <div class="container">
      
-        <?php echo $this->fetch("content");?>
+        <?php echo $this->fetch("content"); ?>
 
     </div><!-- /.container -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <?php echo $this->Html->script("jquery.min");?>    
     <!-- Bootstrap and other plugins -->    
     <?php echo $this->Html->script("bootstrap.min");?>
     <!-- Include all scripts of the page -->
     <?php echo $this->fetch("script");?>
-  </body>
+  </body>  
 </html>

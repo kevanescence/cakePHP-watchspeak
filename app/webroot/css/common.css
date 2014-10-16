@@ -12,3 +12,6 @@ body {
 .navbar form input {
     margin-left: 5px; //TOBE imrpoved
 }
+
+/****************************** Ajax loading tools ****************************/
+#busy-indicator { display:none; }

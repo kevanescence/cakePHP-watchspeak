@@ -37,8 +37,28 @@ div.col-md-3 {
     text-align: center;
 }
 #btn-add-friend {
-    margin-top:1em;
+    margin-top:1em;    
 }
 #UserSexeF {
     margin-left: 1em;
+}
+
+/************************** The friend section ********************************/
+div.user-badge {
+    text-align: center;
+    opacity: 0.4;
+    margin-bottom: 1em;
+}
+div.user-badge img {
+    margin-bottom: 0.3em;
+}
+div.user-badge:hover{
+    opacity: 1;
+}
+div.user-badge a.username {
+    display:block;
+    font-size: 1.2em;
+}
+div.user-badge a.username:hover {
+    cursor:pointer;
 }

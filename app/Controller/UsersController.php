@@ -3,11 +3,35 @@
 // app/Controller/UsersController.php
 class UsersController extends AppController {
 
-    public $components = array('Paginator');
+    public $components = array('RequestHandler', 'Paginator');
+    public $helpers = array('Js' => array('Jquery'));
     public $paginate = array(
-        'limit' => 2,
-        'order' => array(
-            'Post.id' => 'desc'
+        'UserPosts' => array(
+            'limit' => 5,
+            'order' => array(
+                'Post.id' => 'desc'),
+        ),
+        'friends1' => array(
+            'limit' => 1,
+            'joins' => array(
+                array(
+                    'table' => 'friends',
+                    'alias' => 'UsersFriend',
+                    'type' => 'inner',
+                    'conditions' => array(
+                        'UsersFriend.receives_id = friends1.id',
+                    ),
+                ),
+                array(
+                    'table' => 'users',
+                    'alias' => 'User',
+                    'type' => 'inner',
+                    'conditions' => array(
+                        'User.id = UsersFriend.sends_id',
+                        'User.id' => 3
+                    )
+                )
+            )
         )
     );
 
@@ -50,7 +74,7 @@ class UsersController extends AppController {
         $option = array('order' => array('created DESC'),
             'limit' => '5');
         //$data = $this->Paginator->paginate('Recipe');
-        $this->Paginator->settings = $this->User->UserPosts > paginate;
+        //$this->Paginator->settings = $this->User->UserPosts > paginate;
 
         $this->set('posts', $this->Paginator->paginate()); //User->UserPosts->find('all', $option));
         //$this->Paginator->settings = $this->paginate;
@@ -59,20 +83,43 @@ class UsersController extends AppController {
         $this->set('users', $this->paginate());
     }
 
-    public function view($id = null, $onglet = 'infos') {
+    public function view($id = null, $onglet = 'infos', $page = null) {
         $this->User->id = $id;
+        if ($id == null)
+            $this->User->id = AuthComponent::user('id');
         if (!$this->User->exists()) {
             throw new NotFoundException(__('User invalide'));
         }
-        $this->Paginator->settings = $this->paginate;
-        $this->Paginator->settings = array(
-            'limit' => '5',
-            'conditions' => array('UserPosts.user_id' => $id)
-        );
-        $this->set('posts', $this->Paginator->paginate('UserPosts'));
-        //$this->set('posts', $this->User->UserPosts->find('all', $option));
-        $this->set('user', $this->User->read(null, $id));
+
+
         $this->set('onglet', $onglet);
+        if ($this->request->is('ajax')) {
+            if ($onglet == 'friends') {
+                            $this->Paginator->settings = array_merge(
+                    $this->paginate['friends1'], array('conditions' => array('UsersFriend.sends_id' => $id))
+            );
+                $this->set('friends', $this->Paginator->paginate('friends1'));
+                $this->set('user', $this->User->read(null, $id));
+                $this->render('page_friends', 'ajax');
+            }// View, Layout
+            elseif ($onglet == 'publications') {
+                $this->Paginator->settings = array_merge(
+                $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $id))
+                );
+                $this->set('posts', $this->Paginator->paginate('UserPosts'));
+                $this->render('page_posts', 'ajax');
+            }
+        } else {
+            $this->Paginator->settings = array_merge(
+                    $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $id))
+            );
+            $this->set('posts', $this->Paginator->paginate('UserPosts'));
+            $this->Paginator->settings = array_merge(
+                    $this->paginate['friends1'], array('conditions' => array('UsersFriend.sends_id' => $id))
+            );
+            $this->set('friends', $this->Paginator->paginate('friends1'));
+            $this->set('user', $this->User->read(null, $id));
+        }
     }
 
     /**
@@ -108,7 +155,7 @@ class UsersController extends AppController {
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('L\'user a été sauvegardé'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('action' => 'view', $id));
             } else {
                 $this->Session->setFlash(__('L\'user n\'a pas été sauvegardé. Merci de réessayer.'));
             }
