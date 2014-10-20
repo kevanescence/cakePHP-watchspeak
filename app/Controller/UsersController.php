@@ -89,17 +89,20 @@ class UsersController extends AppController {
      * @throws NotFoundException If the user does not exist
      */
     public function view($id = null, $tab = 'infos') {
-        
+                
         //If not defined, set the id to the logged user's id
         if (!isset($id)) {
             $this->User->id = AuthComponent::user('id');
         }
+        else {
+            $this->User->id = $id;
+        }
+        
         //Checks the user existance
         if (!$this->User->exists()) {
             throw new NotFoundException(__('User invalide'));
-        }
+        }        
         
-        $this->User->id = $id;
         $this->set('id_user', $this->User->id);
         $this->set('onglet', $tab);
         $condition = array('User.id' => $id);
