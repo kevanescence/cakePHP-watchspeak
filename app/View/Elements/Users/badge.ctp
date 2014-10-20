@@ -1,6 +1,10 @@
 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 user-badge">
-    <img src="http://lorempixel.com/120/120/" alt="" />
-    <a class="username"><?= $username ?></a>
+    <img src="http://lorempixel.com/120/120/" alt="" />   
+    <?= $this->Html->link($username,
+                            array('controller' => 'Users',
+                                'action' => 'view',
+                                 $id),
+                            array('class' => 'username'));?>    
     <div class="stats">
         <span class="glyphicon glyphicon-eye-open">56</span>
         <span class="glyphicon glyphicon-user">42</span>

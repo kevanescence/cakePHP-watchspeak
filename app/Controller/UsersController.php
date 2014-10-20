@@ -12,7 +12,7 @@ class UsersController extends AppController {
                 'Post.id' => 'desc'),
         ),
         'friends1' => array(
-            'limit' => 1,
+            'limit' => 2,
             'joins' => array(
                 array(
                     'table' => 'friends',
@@ -31,8 +31,7 @@ class UsersController extends AppController {
                         'User.id' => 3
                     )
                 )
-            )
-        )
+            ))
     );
 
     public function beforeFilter() {
@@ -83,28 +82,43 @@ class UsersController extends AppController {
         $this->set('users', $this->paginate());
     }
 
-    public function view($id = null, $onglet = 'infos', $page = null) {
-        $this->User->id = $id;
-        if ($id == null)
+    /**
+     * Controls the User view action
+     * @param type $id the User id to see
+     * @param type $tab the User section to display
+     * @throws NotFoundException If the user does not exist
+     */
+    public function view($id = null, $tab = 'infos') {
+        
+        //If not defined, set the id to the logged user's id
+        if (!isset($id)) {
             $this->User->id = AuthComponent::user('id');
+        }
+        //Checks the user existance
         if (!$this->User->exists()) {
             throw new NotFoundException(__('User invalide'));
         }
-
-
-        $this->set('onglet', $onglet);
+        
+        $this->User->id = $id;
+        $this->set('id_user', $this->User->id);
+        $this->set('onglet', $tab);
+        $condition = array('User.id' => $id);
+        $this->paginate['friends1']['joins'][1]['conditions'] =array(
+                        'User.id = UsersFriend.sends_id',
+                        'User.id' => $id
+                    );       
+        $this->set('user', $this->User->read(null, $id));
         if ($this->request->is('ajax')) {
-            if ($onglet == 'friends') {
-                            $this->Paginator->settings = array_merge(
-                    $this->paginate['friends1'], array('conditions' => array('UsersFriend.sends_id' => $id))
-            );
+
+            if ($tab == 'friends') {                                
+                $this->Paginator->settings = array_merge($this->paginate['friends1'], $condition);
                 $this->set('friends', $this->Paginator->paginate('friends1'));
                 $this->set('user', $this->User->read(null, $id));
                 $this->render('page_friends', 'ajax');
-            }// View, Layout
-            elseif ($onglet == 'publications') {
+            }
+            elseif ($tab == 'publications') {
                 $this->Paginator->settings = array_merge(
-                $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $id))
+                        $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $id))
                 );
                 $this->set('posts', $this->Paginator->paginate('UserPosts'));
                 $this->render('page_posts', 'ajax');
@@ -115,10 +129,8 @@ class UsersController extends AppController {
             );
             $this->set('posts', $this->Paginator->paginate('UserPosts'));
             $this->Paginator->settings = array_merge(
-                    $this->paginate['friends1'], array('conditions' => array('UsersFriend.sends_id' => $id))
-            );
-            $this->set('friends', $this->Paginator->paginate('friends1'));
-            $this->set('user', $this->User->read(null, $id));
+                    $this->paginate['friends1'], $condition);
+            $this->set('friends', $this->Paginator->paginate('friends1'));            
         }
     }
 
