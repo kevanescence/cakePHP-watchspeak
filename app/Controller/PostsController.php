@@ -38,8 +38,7 @@ class PostsController extends AppController {
             $this->request->data['Post']['title'] = 'bliliblil';
             if ($this->Post->save($this->request->data)) {
                 $this->Session->setFlash(__('Your post has been saved.'));
-                return $this->redirect(array('controller' => 'Users',
-                                              'action' => 'index'));
+                return $this->redirect($this->referer());
             }
             $this->Session->setFlash(__('Unable to add your post.'));
         }
