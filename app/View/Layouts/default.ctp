@@ -7,10 +7,11 @@
     <title> <?php echo $this->fetch("title");?></title>
 
     <!-- Bootstrap and others css -->    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <?php         
         echo $this->Html->css("bootstrap.min");
         echo $this->Html->css("common");
-        echo $this->fetch("css");
+        echo $this->fetch("css");        
         echo $this->Html->script("jquery.min");
     ?>  
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -35,9 +36,9 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li class="active">
+                    <?= $this->Html->link("Home", array('controller'=>'Posts','action'=>'index'))?>
+                </li>
                 <?php            
                     if($this->Session->read('Auth.User.username')){
                         $option =  array(
@@ -57,16 +58,18 @@
                 ?>
         </div><!--/.nav-collapse -->
       </div>
+        
     </div>
-
+    <div class="col-lg-offset-9 col-lg-3                
+                flash-message flash-validation">Vous voilà inscrit <a href="" class="flash-close">X</a></div>
     <div class="container">
      
         <?php echo $this->fetch("content"); ?>
 
-    </div><!-- /.container -->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    </div><!-- /.container -->    
     <!-- Bootstrap and other plugins -->    
     <?php echo $this->Html->script("bootstrap.min");?>
+    <?php echo $this->Html->script("common");?>
     <!-- Include all scripts of the page -->
     <?php echo $this->fetch("script");?>
   </body>  

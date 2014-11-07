@@ -3,7 +3,7 @@
     Author     : kremy
 */
 body {
-    padding-top:60px;
+    padding-top:50px;
 }
 
 .navbar form legend, .navbar form label, .navbar form div.alert{
@@ -15,3 +15,44 @@ body {
 
 /****************************** Ajax loading tools ****************************/
 #busy-indicator { display:none; }
+/****************************** Flash message tools ***************************/
+.flash-message {
+    position: absolute;
+    font-size: 1.1em;
+    height: 51px;        
+    top:0;
+    z-index:100000;    
+    border-radius:5px 0px 0px 5px;
+    padding: 1em;
+    color: #FFF;
+}
+.flash-message.flash-error {
+    background-color: #fe1611;/*For old browsers*/
+    background-image:-moz-linear-gradient(#ff8686,#fe1611);    
+}
+.flash-message.flash-warning{
+    background-color: #ff782b;/*For old browsers*/
+    background-image:-moz-linear-gradient(#ffc76f,#FFA673);
+}
+.flash-message.flash-validation{
+    background-color: #55ae3b;/*For old browsers*/
+    background-image:-moz-linear-gradient(#ace469,#55ae3b);
+}
+.flash-message.flash-information{
+    background-color: #00B7E9;/*For old browsers*/
+    background-image:-moz-linear-gradient(#52a9ff,#00B7E9);
+}
+.flash-message a.flash-close{    
+    color:#fff;
+    text-decoration: none;    
+    text-align: center;
+    float:right;
+    margin-right: 10px;
+    font-size: 1em;
+    opacity:0.8;
+    padding: 2px;
+    border-radius: 4px;
+}
+.flash-message a.flash-close:hover{
+    background-color: #d2d2d2;
+}
