@@ -168,7 +168,7 @@ class UsersController extends AppController {
             throw new NotFoundException(__('User Invalide'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->User->save($this->request->data)) {
+            if ($this->User->save($this->request->data)) {                
                 $this->Session->setFlash(__('L\'user a été sauvegardé'));
                 return $this->redirect(array('action' => 'view', $id));
             } else {

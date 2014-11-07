@@ -70,13 +70,22 @@ if ($hasRight) {
 <div id="birthdayDiv" class="input-group">
     <span class="input-group-addon  glyphicon glyphicon-gift"></span>
     <?php
-    if($hasRight) {
-        echo $this->Form->input("User.birthday", array('label' => false,
-                                                    'class' => 'form-control',
-                                                    'placeholder' => 'Prénom',
-                                                    'dateFormat' => 'DMY',
-                                                    'div' => false,
-                                                    'value' => $user['User']['birthday']));
+    if($hasRight) {        ;
+        $birthday = str_split($user['User']['birthday']);
+        $year = $birthday[0] . $birthday[1] . $birthday[2] . $birthday[3];
+        $month = $birthday[5] . $birthday[6];
+        $day = $birthday[8] . $birthday[9];        
+        echo $this->Form->day('User.birthday', array('class' => 'form-control',
+            'empty' => false,
+            'value'=>$day));
+        echo $this->Form->month('User.birthday', array('class' => 'form-control',
+            'empty' => false,
+            'value'=>$month));
+        echo $this->Form->year('User.birthday', date('Y') - 100, date('Y') - 13, 
+                                array('class' => 'form-control',
+                                      'empty' => false,
+                                      'value'=>$year));
+        
     } else {
         echo $this->Html->tag("span", $user['User']['birthday']
                                     , array('class' => "form-control"));
@@ -103,7 +112,7 @@ if ($hasRight) {
         echo $this->Form->radio("sexe", array( 'm' => 'Homme',
                                                'f' => 'Femme'),
                                         array('legend'=>false,
-                                              'value' => 'm',
+                                              'value' => $user['User']['sexe'],
                                               'class' => 'btn btn-default'));
     } else {
         $sexe = $user['User']['sexe']=='m'?'Homme':'Femme';
@@ -117,6 +126,7 @@ if ($hasRight) {
     <span class="form-control">Bienvenu à Gattaca</span>
 </div>
 <?php
+    echo $this->Session->flash();
     if($hasRight) {
         echo $this->Form->end(array("label" => "Enregistrer",
                                     "id" => "btn-save-info",
