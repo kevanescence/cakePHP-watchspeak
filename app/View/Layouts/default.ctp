@@ -32,7 +32,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Watchspeak</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -59,10 +59,7 @@
         </div><!--/.nav-collapse -->
       </div>
         
-    </div>
-    <div class="col-lg-offset-9 col-lg-3                
-                flash-message flash-validation">Vous voilà inscrit <a href="" class="flash-close">X</a></div>
-    <div class="container">
+    </div>    
      
         <?php echo $this->fetch("content"); ?>
 
@@ -72,5 +69,6 @@
     <?php echo $this->Html->script("common");?>
     <!-- Include all scripts of the page -->
     <?php echo $this->fetch("script");?>
+    <?php echo $this->Flash->priority(); ?>
   </body>  
 </html>

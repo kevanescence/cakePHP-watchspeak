@@ -28,7 +28,7 @@ if ($hasRight) {
 <div class = "input-group">
     <span class="input-group-addon  glyphicon glyphicon-user"></span>
     <?php
-    if($hasRight) {
+    if($hasRight) {        
         echo $this->Form->input("User.username", array('label' => false,
                                                        'class' => 'form-control',
                                                        'placeholder' => 'Pseudo',
@@ -125,8 +125,7 @@ if ($hasRight) {
     <span class="input-group-addon glyphicon glyphicon-film"></span>
     <span class="form-control">Bienvenu à Gattaca</span>
 </div>
-<?php
-    echo $this->Session->flash();
+<?php    
     if($hasRight) {
         echo $this->Form->end(array("label" => "Enregistrer",
                                     "id" => "btn-save-info",

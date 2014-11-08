@@ -31,7 +31,7 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-
+    public $helpers = array('Session', 'Html', 'Flash', 'Form');
     public $components = array(
         'Session',
         'Auth' => array(
@@ -44,6 +44,7 @@ class AppController extends Controller {
             'unauthorizedRedirect'=> array('controller' => 'users', 'action' => 'login'),
             'authorize' => array('Controller') // Added this line
         )
+        , 'Flash'
     );
 
     public function isAuthorized($user) {

@@ -170,6 +170,7 @@ class UsersController extends AppController {
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->User->save($this->request->data)) {                
                 $this->Session->setFlash(__('L\'user a été sauvegardé'));
+                $this->Flash->setValidation('Informations mises à jour');
                 return $this->redirect(array('action' => 'view', $id));
             } else {
                 $this->Session->setFlash(__('L\'user n\'a pas été sauvegardé. Merci de réessayer.'));
