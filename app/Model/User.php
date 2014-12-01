@@ -27,14 +27,22 @@ class User extends AppModel {
         'firstname' => array(            
             'required' => array(
                 'rule' => array('notEmpty'),
-                'message' => 'Un mot prénom est requis'
-             )
+                'message' => 'Un prénom est requis'
+             ),
+            'alphabet' => array(
+                'rule' => '/^[a-zA-Zéèïüêàù]+$/i',
+                'message' => 'Uniquement des caractères alphabétiques'
+             )            
         ),
         'name' => array(            
             'required' => array(
                 'rule' => array('notEmpty'),
-                'message' => 'Un mot nom est requis'
-            )
+                'message' => 'Un nom est requis'
+            ),
+            'alphabet' => array(
+                'rule' => '/^[a-zA-Zéèïüêàù]+$/i',
+                'message' => 'Uniquement des caractères alphabétiques'
+             )  
         ),
         'password' => array(
             'required' => array(

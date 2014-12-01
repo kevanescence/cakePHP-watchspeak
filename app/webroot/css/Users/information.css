@@ -18,13 +18,10 @@ img {
     margin:auto;
 }
 
-input#btn-save-info {
-    margin-top:1em;
-    margin-left:60%;
-    //position: absolute;
-    right:5%;
+input#btn-save-info, a#btn-cancel {    
+    margin-top: 1em;
+    //position: absolute;       
 }
-
 .container.tab-pane {    
     padding: 1em;
     background-color: #f0f0f0;
@@ -33,7 +30,7 @@ input#btn-save-info {
     border-width: 0 1px 1px 1px;
 }
 
-div.col-md-3 {
+div.user-badge-section {
     text-align: center;
 }
 #btn-add-friend {

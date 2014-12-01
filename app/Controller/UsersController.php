@@ -173,10 +173,12 @@ class UsersController extends AppController {
                 $this->Flash->setValidation('Informations mises à jour');
                 return $this->redirect(array('action' => 'view', $id));
             } else {
-                $this->Session->setFlash(__('L\'user n\'a pas été sauvegardé. Merci de réessayer.'));
+                $this->set('user', $this->request->data);
+                $this->Flash->setError(__('Merci de corriger les erreurs'));
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
+            $this->set('user', $this->request->data);        
             unset($this->request->data['User']['password']);
         }
     }

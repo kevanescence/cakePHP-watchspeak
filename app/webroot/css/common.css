@@ -3,7 +3,7 @@
     Author     : kremy
 */
 body {
-    padding-top:50px;
+    padding-top:70px;
 }
 
 .navbar form legend, .navbar form label, .navbar form div.alert{
@@ -55,4 +55,20 @@ body {
 }
 .flash-message a.flash-close:hover{
     background-color: #d2d2d2;
+}
+/**************************** Form fiels errors *******************************/
+.input-group .error input{
+    border-radius: 0;
+    border-top:0;
+    border-right: 0;
+    border-left: 0;
+}
+.form-group.error {    
+    margin-bottom: 0px;
+    border:inherit;
+    border:1px solid #ccc
+}
+.input-group .error div.error-message{
+    font-style: italic;
+    color:red;
 }

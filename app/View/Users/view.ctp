@@ -13,7 +13,10 @@
 <div class="tab-content">   
     <div class="tab-pane <?php if ($onglet === "infos") echo "active "; ?>
          container" id="infos">
-         <?= $this->element("Users/information", array('user' => $user)); ?>
+         <div class="col-lg-6 col-lg-offset-1">
+         <?= $this->element("Users/information", array('user' => $user, 
+                                                       'settable' => false)); ?>
+             </div>
     </div>
     
     <div class="tab-pane <?php if ($onglet === "publications") echo "active "; ?>

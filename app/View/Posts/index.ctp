@@ -2,8 +2,7 @@
 <?php $this->append("css", $this->Html->css("Users/home")); 
 $this->append("script", $this->Html->script("Posts/home"));
 ?>
-<?= $this->Session->read('Auth.User.username'); ?>
-<br/><div class="col-lg-4 col-md-4"></div>
+<div class="col-lg-4 col-md-4"></div>
 <section title="actualités" class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
     <div class="ribbon-wrapper">
         <header class="ribbon-front">

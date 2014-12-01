@@ -3,12 +3,12 @@ $this->append("css", $this->Html->css("Users/information"));
 $this->append("script", $this->Html->script("Users/information"));
 ?>
 
-<div class="col-md-3">
+<div class="col-md-5 user-badge-section">
     <img alt="200x200" class="img-responsive" src="http://lorempixel.com/200/200/" >
     
     <input id="btn-add-friend" type="button" class="btn btn-primary" value="+ Ajouter en ami" />
 </div>
-<div class="col-md-4">
+<div class="col-md-7">
 <?php
 $hasRight = AuthComponent::user('id') == $user['User']['id'] 
             || AuthComponent::user('role') == 'admin';
@@ -16,11 +16,14 @@ if ($hasRight) {
     echo $this->Form->create('User', array(
                                         'role' => 'form',
                                         'inputDefaults' => array(
-                                        'class' => 'form-control',
-                                        'div' => array('class' => 'form-group')),
+                                            'class' => 'form-control',
+                                            'div' => array('class' => 'form-group')),
                                         'url' => array('controller' => 'users',
                                         'action' => 'edit',
                                         $user['User']['id'])));
+    if($settable) {
+        echo "<fieldset>" . $this->Html->tag('legend', 'Modificaitons des informations');    
+    }
     echo $this->Form->input('id', array('type' => 'hidden', 
                                         'value' => $user['User']['id']));
 }
@@ -70,11 +73,22 @@ if ($hasRight) {
 <div id="birthdayDiv" class="input-group">
     <span class="input-group-addon  glyphicon glyphicon-gift"></span>
     <?php
-    if($hasRight) {        ;
-        $birthday = str_split($user['User']['birthday']);
-        $year = $birthday[0] . $birthday[1] . $birthday[2] . $birthday[3];
-        $month = $birthday[5] . $birthday[6];
-        $day = $birthday[8] . $birthday[9];        
+    $birthday = $user['User']['birthday'];
+    if($hasRight) {
+        
+        if(is_string($birthday)) {
+            $birthday = explode("-", $birthday);
+            $year = $birthday[0];
+            $month = $birthday[1];
+            $day = $birthday[2];  
+        }
+        else {
+            $year = $birthday["year"];
+            $month = $birthday["month"];
+            $day = $birthday["day"];  
+        }        
+                    
+
         echo $this->Form->day('User.birthday', array('class' => 'form-control',
             'empty' => false,
             'value'=>$day));
@@ -127,10 +141,21 @@ if ($hasRight) {
 </div>
 <?php    
     if($hasRight) {
+        echo $this->Html->link('Annuler' , array('controller' => 'users',
+                                                 'action' => 'view'),
+                                           array('class' => 'btn btn-danger'
+                                               . ' col-lg-4 col-lg-offset-1'
+                                               . ' col-sm-4 col-sm-offset-1'
+                                               . ' col-xs-4 col-xs-offset-1',
+                                                 'id' => 'btn-cancel'));
         echo $this->Form->end(array("label" => "Enregistrer",
                                     "id" => "btn-save-info",
                                      'div' => false,
-                                    "class" => "btn btn-md btn-success"));
+                                    "class" => "btn btn-md btn-success "
+                                                . "col-lg-4 col-lg-offset-1"
+                                                ." col-sm-4 col-sm-offset-2"
+                                                ." col-xs-4 col-xs-offset-1"));
     }
  ?>
+    </fieldset>
 </div>
