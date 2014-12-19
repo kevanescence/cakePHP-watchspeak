@@ -41,15 +41,15 @@ div.user-badge-section {
 }
 
 /************************** The friend section ********************************/
-div.user-badge {
+div.user-badge, a.btn-chg-picture {
     text-align: center;
     opacity: 0.4;
-    margin-bottom: 1em;
+    margin-bottom: 0.6em;
 }
 div.user-badge img {
     margin-bottom: 0.3em;
 }
-div.user-badge:hover{
+div.user-badge:hover, a.btn-chg-picture:hover{
     opacity: 1;
 }
 div.user-badge a.username {
@@ -58,4 +58,11 @@ div.user-badge a.username {
 }
 div.user-badge a.username:hover {
     cursor:pointer;
+}
+div.user-badge-section {
+    padding:0;
+}
+div.user-badge {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
 }

@@ -3,7 +3,8 @@
 foreach ($users as $user) {            
     echo $this->element('Users/badge',
                         array('username' => $user['friends1']['username'],
-                              'id' => $user['friends1']['id']));
+                              'id' => $user['friends1']['id'],
+                               'cssClass' => 'col-lg-2 col-md-3 col-sm-4 col-xs-6 '));
 }
 
 //Configure pagination tools

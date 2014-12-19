@@ -50,7 +50,7 @@ class User extends AppModel {
                 'message' => 'Un mot de passe est requis'
             ),
             'between' => array(
-                'rule' => array('between', 5, 15),
+                'rule' => array('between', 1, 15),
                 'message' => 'Entre 5 et 15 caractères'
             )
         ),

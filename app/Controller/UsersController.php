@@ -41,9 +41,12 @@ class UsersController extends AppController {
     }
 
     public function isAuthorized($user) {
-        // For view actions, current user has to be the integorated one ...        
-        if (in_array($this->action, array('view', 'edit'))) {
+        //No specific conditions are applied
+        if (in_array($this->action, array('addFriend', 'view'))) {
             return true;
+        }
+        // For some actions, current user has to be the integorated one ... 
+        if (in_array($this->action, array('view', 'edit'))) {
             $userId = (int) $this->request->params['pass'][0];
             if ($userId == $this->Auth->user('id')) {
                 return true;
@@ -51,6 +54,55 @@ class UsersController extends AppController {
         }
         // .. or have the default rules
         return parent::isAuthorized($user);
+    }
+
+    /**
+     * Add the friend given in parameter to the current logged user friend list
+     * @param type $id the id of the friend to add
+     */
+    public function addFriend() {
+
+        //Check the given user id existance
+        $id = $this->request->data['friends1']['receives_id'];
+        $this->User->id = $id;
+        if (!isset($id) || !$this->User->exists()) {
+            throw new NotFoundException(__('User invalide'));
+        }
+        
+        $options['joins'] = array(
+            array('table' => 'friends',
+                'alias' => 'f',                
+                'conditions' => array('and' => array(
+                    "f.receives_id='$id'",
+                    "f.sends_id='" . $this->request->data['User']['id'] . "'")
+                )
+            )
+        );
+        $options['conditions'] =  "id='" . $this->request->data['User']['id'] . "'";
+
+        //Avoid additional fields as we won't perform checkings
+        $safe_data = array(
+            'friends1' => array(
+                'receives_id' => $this->request->data['friends1']['receives_id']
+            ),
+            'User' => array(
+                'id' => $this->request->data['User']['id']
+        ));
+
+        if ($this->User->save($safe_data, false)) {
+            //Save relation in the other way
+            $safe_data = array(
+                'friends1' => array(
+                    'receives_id' => $this->request->data['User']['id']
+                ),
+                'User' => array(
+                    'id' => $this->request->data['friends1']['receives_id']
+            ));
+            $this->User->save($safe_data, false);
+            return $this->redirect(array('controller' => 'users',
+                        'action' => 'view', $id, 'infos'));
+        }
+        return $this->redirect(array('controller' => 'users', 'action' => 'index'));
     }
 
     public function login() {
@@ -89,51 +141,49 @@ class UsersController extends AppController {
      * @throws NotFoundException If the user does not exist
      */
     public function view($id = null, $tab = 'infos') {
-                
+
         //If not defined, set the id to the logged user's id
         if (!isset($id)) {
             $this->User->id = AuthComponent::user('id');
-        }
-        else {
+        } else {
             $this->User->id = $id;
         }
-        
+
         //Checks the user existance
         if (!$this->User->exists()) {
             throw new NotFoundException(__('User invalide'));
-        }        
-        
+        }
+
         $this->set('id_user', $this->User->id);
         $this->set('onglet', $tab);
         $condition = array('User.id' => $id);
-        $this->paginate['friends1']['joins'][1]['conditions'] =array(
-                        'User.id = UsersFriend.sends_id',
-                        'User.id' => $id
-                    );       
+        $this->paginate['friends1']['joins'][1]['conditions'] = array(
+            'User.id = UsersFriend.sends_id',
+            'User.id' => $id
+        );
         $this->set('user', $this->User->read(null, $id));
         if ($this->request->is('ajax')) {
 
-            if ($tab == 'friends') {                                
+            if ($tab == 'friends') {
                 $this->Paginator->settings = array_merge($this->paginate['friends1'], $condition);
                 $this->set('friends', $this->Paginator->paginate('friends1'));
                 $this->set('user', $this->User->read(null, $id));
                 $this->render('page_friends', 'ajax');
-            }
-            elseif ($tab == 'publications') {
+            } elseif ($tab == 'publications') {
                 $this->Paginator->settings = array_merge(
-                        $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $id))
+                        $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $this->User->id))
                 );
                 $this->set('posts', $this->Paginator->paginate('UserPosts'));
                 $this->render('page_posts', 'ajax');
             }
         } else {
             $this->Paginator->settings = array_merge(
-                    $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $id))
+                    $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $this->User->id))
             );
             $this->set('posts', $this->Paginator->paginate('UserPosts'));
             $this->Paginator->settings = array_merge(
                     $this->paginate['friends1'], $condition);
-            $this->set('friends', $this->Paginator->paginate('friends1'));            
+            $this->set('friends', $this->Paginator->paginate('friends1'));
         }
     }
 
@@ -168,7 +218,7 @@ class UsersController extends AppController {
             throw new NotFoundException(__('User Invalide'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->User->save($this->request->data)) {                
+            if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('L\'user a été sauvegardé'));
                 $this->Flash->setValidation('Informations mises à jour');
                 return $this->redirect(array('action' => 'view', $id));
@@ -178,7 +228,7 @@ class UsersController extends AppController {
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
-            $this->set('user', $this->request->data);        
+            $this->set('user', $this->request->data);
             unset($this->request->data['User']['password']);
         }
     }

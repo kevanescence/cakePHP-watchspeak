@@ -1,17 +1,23 @@
 <?php
 $this->append("css", $this->Html->css("Users/information"));
 $this->append("script", $this->Html->script("Users/information"));
+$hasRight = AuthComponent::user('id') == $user['User']['id'] 
+            || AuthComponent::user('role') == 'admin';
 ?>
 
-<div class="col-md-5 user-badge-section">
-    <img alt="200x200" class="img-responsive" src="http://lorempixel.com/200/200/" >
-    
-    <input id="btn-add-friend" type="button" class="btn btn-primary" value="+ Ajouter en ami" />
+<div class="col-lg-5 user-badge-section">
+    <?= $this->element('Users/badge', array('id' => $user['User']['id'],
+                                            'cssClass' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
+                                            'username' => $user['User']['username']));?> 
+    <?php 
+    if($hasRight) {
+    ?><a href="" class="col-lg-10 col-lg-offset-1 btn btn-success btn-chg-picture"><span class=" glyphicon glyphicon-cloud-upload"></span> Changer la photo</a>
+    <?php }
+    ?>
 </div>
 <div class="col-md-7">
 <?php
-$hasRight = AuthComponent::user('id') == $user['User']['id'] 
-            || AuthComponent::user('role') == 'admin';
+
 if ($hasRight) {
     echo $this->Form->create('User', array(
                                         'role' => 'form',
@@ -28,6 +34,32 @@ if ($hasRight) {
                                         'value' => $user['User']['id']));
 }
 ?>
+<div class="input-group col-lg-12 col-md-12 col-xs-12 col-sm-12">    
+    <?php
+    if($hasRight) {
+        echo $this->Form->input("User.name", array('label' => 'Nom',
+                                                    'class' => 'form-control',
+                                                    'placeholder' => 'Nom',
+                                                    'value' => $user['User']['name']));
+    } else {
+        echo $this->Html->tag("span", $user['User']['name']
+                                    , array('class' => "form-control"));
+    }
+    ?>
+</div>
+<div class="input-group col-lg-12 col-md-12 col-xs-12 col-sm-12">    
+    <?php
+    if($hasRight) {
+        echo $this->Form->input("User.firstname", array('label' => 'Prénom',
+                                                    'class' => 'form-control',
+                                                    'placeholder' => 'Prénom',
+                                                    'value' => $user['User']['firstname']));
+    } else {
+        echo $this->Html->tag("span", $user['User']['firstname']
+                                    , array('class' => "form-control"));
+    }
+    ?>
+</div>
 <div class = "input-group">
     <span class="input-group-addon  glyphicon glyphicon-user"></span>
     <?php
@@ -38,34 +70,6 @@ if ($hasRight) {
                                                        'value' => $user['User']['username']));
     } else {
         echo $this->Html->tag("span", $user['User']['username']
-                                    , array('class' => "form-control"));
-    }
-    ?>
-</div>
-<div class="input-group">
-    <span class="input-group-addon  glyphicon glyphicon-user"></span>
-    <?php
-    if($hasRight) {
-        echo $this->Form->input("User.name", array('label' => false,
-                                                    'class' => 'form-control',
-                                                    'placeholder' => 'Nom',
-                                                    'value' => $user['User']['name']));
-    } else {
-        echo $this->Html->tag("span", $user['User']['name']
-                                    , array('class' => "form-control"));
-    }
-    ?>
-</div>
-<div class="input-group">
-    <span class="input-group-addon glyphicon glyphicon-user"></span>
-    <?php
-    if($hasRight) {
-        echo $this->Form->input("User.firstname", array('label' => false,
-                                                    'class' => 'form-control',
-                                                    'placeholder' => 'Prénom',
-                                                    'value' => $user['User']['firstname']));
-    } else {
-        echo $this->Html->tag("span", $user['User']['firstname']
                                     , array('class' => "form-control"));
     }
     ?>
@@ -142,19 +146,21 @@ if ($hasRight) {
 <?php    
     if($hasRight) {
         echo $this->Html->link('Annuler' , array('controller' => 'users',
-                                                 'action' => 'view'),
+                                                 'action' => 'view', $user['User']['id'] ),
                                            array('class' => 'btn btn-danger'
                                                . ' col-lg-4 col-lg-offset-1'
                                                . ' col-sm-4 col-sm-offset-1'
+                                               . ' col-md-4 col-md-offset-1'
                                                . ' col-xs-4 col-xs-offset-1',
                                                  'id' => 'btn-cancel'));
         echo $this->Form->end(array("label" => "Enregistrer",
                                     "id" => "btn-save-info",
                                      'div' => false,
                                     "class" => "btn btn-md btn-success "
-                                                . "col-lg-4 col-lg-offset-1"
+                                                . "col-lg-4 col-lg-offset-2"
                                                 ." col-sm-4 col-sm-offset-2"
-                                                ." col-xs-4 col-xs-offset-1"));
+                                                .' col-md-4 col-md-offset-2'
+                                                ." col-xs-4 col-xs-offset-2"));
     }
  ?>
     </fieldset>
