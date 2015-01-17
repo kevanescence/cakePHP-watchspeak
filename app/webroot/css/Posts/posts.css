@@ -17,18 +17,19 @@
     display:inline-block;
     vertical-align: middle;
 }
+section.postAndComments {
+    margin-left:5%;
+    width: 80%;
+}
 
 article.post {
-    min-height: 4em;
-    width: 80%;
-    margin-left:5%;
-    margin-top: 1em;    
+    min-height: 4em;    
+    margin-top: 1em;      
     border-radius:5px;
     position:relative;
     text-align: justify;
     padding-left: 4px;
-    padding-right: 10px;
-    
+    padding-right: 10px;    
     color:#062A99;
     background-color: #C7CEDB;
     background-image: -moz-linear-gradient(#fff, #C7CEDB);
@@ -40,6 +41,11 @@ article.post {
     -webkit-box-shadow: 1pt 2px 1px rgba(0, 0, 255, 0.2), -2px 1px 1px rgba(0, 0, 255, 0.1);
     box-shadow: 1pt 2px 1px rgba(0, 0, 255, 0.2), -2px 1px 1px rgba(0, 0, 255, 0.1);
     
+}
+
+section.comments {
+    margin-top:0.6em;
+    padding-left: 10%;
 }
 
 article a.author {
@@ -90,6 +96,75 @@ article.post:hover a.corner.fold{
 
 /* End of the corner properties */
 
+/******************************************************************************/
+/************************* Start of comment display ***************************/
+/******************************************************************************/
+p.comment{
+    margin-bottom: 0;
+    padding: 0 !important;
+    position: relative;
+    text-align: center;    
+    padding: 0px 0px;
+    background: #ddd;
+    //border-color: #fff #888 #888 #888;
+    border-style: solid;
+    border-width: 1px;
+    border-color:#aaa;
+    border-radius: 0.25em;               
+    background: -moz-linear-gradient(#eef, #ccc);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ccc), color-stop(0.5, #aaa));
+}
+span.comment-triangle{
+    width:0px;
+    display:block;
+    margin-top:-1px;
+    margin-left:3em;
+    border-left: 20px solid #ccc;
+    border-bottom: 8px solid rgba(0,0,0,0);
+     -moz-transform:skew(30deg);
+     -webkit-transform:skew(30deg);
+     -o-transform:skew(30deg);
+     -ms-transform:skew(30deg);
+     tranform:skew(30deg);
+ 
+}
+section.comment a.pseudo{
+    color:#125DCD;
+}
+
+section.comment:hover a.delete{
+    color:#000;
+}
+section.comment a.delete{
+    float:right;
+    margin-right: 1em;
+    font-weight: bold;
+    color:#ccc;
+}
+section.comment a.pseudo:visited{
+    color:#125DCD;
+}
+section.comment span.date{
+    font-style: italic;
+    margin-left: 0.5em;
+}
+ 
+form.comment textarea{
+/*    -moz-border-radius: 0.25em; -webkit-border-radius: 0.25em; border-radius: 0.25em;*/
+    margin-left:4em;
+    margin-right:2em;
+    margin-top:0.7em;
+    font-size:1.1em;
+    height:1.8em;
+    width:25em;
+    text-align:left;
+}
+form.comment textarea:focus {
+    height:4em;
+}
+/******************************************************************************/
+/************************** End of comment display ****************************/
+/******************************************************************************/
 article.post a.display-comments{
     text-decoration: none;
     text-align:center;

@@ -13,6 +13,7 @@ App::uses('AppModel', 'Model');
  * @author kremy
  */
 class Post extends AppModel {
+    public $recursive = -1;
     public $validate = array(
         'title' => array(
             'rule' => 'notEmpty'
@@ -33,6 +34,8 @@ class Post extends AppModel {
     public $hasMany = array(
         'post_comments' => array(
             'className' => 'Comment',
+            'foreignKey' => 'post_id',
+            'limit' => 3,
             'order' => array('post_comments.id' => 'DESC')            
         )
     );

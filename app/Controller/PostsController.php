@@ -16,7 +16,8 @@ class PostsController extends AppController {
     public function index() {
         //$this->set('posts', $this->Post->find('all'));
         $this->Paginator->settings = $this->paginate;
-        $this->set('posts',$this->Paginator->paginate());
+        $this->Post->recursive = 2;
+        $this->set('posts',$this->Paginator->paginate());        
     }
 
     public function view($id = null) {
@@ -24,7 +25,7 @@ class PostsController extends AppController {
             throw new NotFoundException(__('Invalid post'));
         }
 
-        $post = $this->Post->findById($id);
+        $post = $this->Post->findById($id);        
         if (!$post) {
             throw new NotFoundException(__('Invalid post'));
         }

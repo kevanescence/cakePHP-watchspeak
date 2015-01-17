@@ -42,7 +42,7 @@ class UsersController extends AppController {
 
     public function isAuthorized($user) {
         //No specific conditions are applied
-        if (in_array($this->action, array('addFriend', 'view'))) {
+        if (in_array($this->action, array('addFriend','deleteFriend', 'view'))) {
             return true;
         }
         // For some actions, current user has to be the integorated one ... 
@@ -69,17 +69,6 @@ class UsersController extends AppController {
             throw new NotFoundException(__('User invalide'));
         }
         
-        $options['joins'] = array(
-            array('table' => 'friends',
-                'alias' => 'f',                
-                'conditions' => array('and' => array(
-                    "f.receives_id='$id'",
-                    "f.sends_id='" . $this->request->data['User']['id'] . "'")
-                )
-            )
-        );
-        $options['conditions'] =  "id='" . $this->request->data['User']['id'] . "'";
-
         //Avoid additional fields as we won't perform checkings
         $safe_data = array(
             'friends1' => array(
@@ -91,13 +80,8 @@ class UsersController extends AppController {
 
         if ($this->User->save($safe_data, false)) {
             //Save relation in the other way
-            $safe_data = array(
-                'friends1' => array(
-                    'receives_id' => $this->request->data['User']['id']
-                ),
-                'User' => array(
-                    'id' => $this->request->data['friends1']['receives_id']
-            ));
+            $safe_data['friends1']['receives_id'] = $this->request->data['User']['id'];
+            $safe_data['User']['id'] =  $this->request->data['friends1']['receives_id'];            
             $this->User->save($safe_data, false);
             return $this->redirect(array('controller' => 'users',
                         'action' => 'view', $id, 'infos'));
@@ -105,6 +89,30 @@ class UsersController extends AppController {
         return $this->redirect(array('controller' => 'users', 'action' => 'index'));
     }
 
+    /**
+     * delete a friend from the given user's friend list
+     * @return type
+     * @throws NotFoundException if either user or friend's is not numeric
+     */
+    public function deleteFriend() {             
+        
+        $target_id = $this->request->data['friends1']['receives_id'];
+        $user_id = $this->request->data['User']['id'];        
+        
+        //Secu: avoid SQL injection
+        if(!is_numeric($user_id) || !is_numeric($target_id)) {
+            throw new NotFoundException(__('User invalide'));
+        }
+        
+        //TODO: find a better way to manage self HATBM delete
+        $condition  = "sends_id ='$target_id' and receives_id = '$user_id' ";
+        $condition .= "or sends_id ='$user_id' and receives_id = '$target_id'";
+        $this->User->query("delete from friends where " . $condition);
+        //TODO: what happen if delete did not work ?
+        $this->Flash->setValidation('Cette personne a été retirée de vos amis');
+        return $this->redirect($this->referer());
+                
+    }
     public function login() {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
@@ -152,8 +160,7 @@ class UsersController extends AppController {
         //Checks the user existance
         if (!$this->User->exists()) {
             throw new NotFoundException(__('User invalide'));
-        }
-
+        }        
         $this->set('id_user', $this->User->id);
         $this->set('onglet', $tab);
         $condition = array('User.id' => $id);

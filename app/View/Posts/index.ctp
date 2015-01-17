@@ -17,14 +17,15 @@ $this->append("script", $this->Html->script("Posts/home"));
         <div id="recent-posts">
             <?php 
             echo $this->element('Posts/create');               
-            foreach ($posts as $post):                
+            foreach ($posts as $post):                  
                 $option = array(
                   'message' => $post['Post']['body'],
                   'author'  => $post['owner']['username'],
                   'author_id'  => $post['owner']['id'],
                   'created' => $post['Post']['created'],
                   'id'      => $post['Post']['id'],
-                  'nbComments' => $post['Post']['nbComments']
+                  'nbComments' => $post['Post']['nbComments'],
+                  'comments' => $post['post_comments']
                 );
                 echo $this->element('Posts/view', $option);
             endforeach;         

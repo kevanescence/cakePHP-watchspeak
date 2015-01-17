@@ -23,6 +23,12 @@ class Comment extends AppModel {
         'commented_post' => array(
             'className' => 'Post',
             'foreignKey' => 'post_id'
+        ),
+        'owner' => array(
+            'className' => 'User',
+            'foreignKey' => 'user_id',
+            'fields'=> array('username','id')
         )
     );
+        
 }

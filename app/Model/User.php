@@ -81,6 +81,10 @@ class User extends AppModel {
         'UserPosts' => array(
             'className' => 'Post',
             'order' => array('id' => 'DESC')            
+        ),
+        'UserComments' => array(
+            'className' => 'Comment',
+            'order' => array('id' => 'DESC')            
         )
     );
     
@@ -105,6 +109,14 @@ class User extends AppModel {
         return true;
     }
     
+    /**
+     * Return true if the  User as the given user as friend
+     * @param type $idFriend the id of the userr to check
+     */
+    public function hasFriend($idFriend) {
+        debug($this);
+        return false;
+    }
 }
 
 ?>
