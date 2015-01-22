@@ -99,7 +99,7 @@ article.post:hover a.corner.fold{
 /******************************************************************************/
 /************************* Start of comment display ***************************/
 /******************************************************************************/
-p.comment{
+div.comment-body{
     margin-bottom: 0;
     padding: 0 !important;
     position: relative;
@@ -113,6 +113,13 @@ p.comment{
     border-radius: 0.25em;               
     background: -moz-linear-gradient(#eef, #ccc);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ccc), color-stop(0.5, #aaa));
+}
+
+section.comment div p {
+    width:95%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0;    
 }
 span.comment-triangle{
     width:0px;
@@ -132,12 +139,10 @@ section.comment a.pseudo{
     color:#125DCD;
 }
 
-section.comment:hover a.delete{
+section.comment:hover div a.delete{
     color:#000;
 }
-section.comment a.delete{
-    float:right;
-    margin-right: 1em;
+section.comment div a.delete{        
     font-weight: bold;
     color:#ccc;
 }

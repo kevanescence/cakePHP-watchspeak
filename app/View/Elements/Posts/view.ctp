@@ -15,15 +15,27 @@
         <p><?=$message?></p>
         <a href="#" class="display-comments"><?=$nbComments?></a>
     </article>
-    <form class="comment" action="">
-        <textarea placeholder="Commenter ..." name="" id="" cols="30" rows="10"></textarea>
-    </form>
+    <?php
+    echo $this->Form->create('Comment', array('novalidate' => 'novalidate',
+                                            'class' => 'comment',
+                                            'controller' => 'Comment',
+                                            'action' => 'add',
+                                            'id' => 3));
+    echo $this->Form->input('body', array('rows' => 10, 
+                                          'cols' => 30,
+                                          'label'=>false,
+                                          'div' => false,
+                                          'placeholder'=>'Commentez ...'));
+    echo $this->Form->input('post_id', array('type' => 'hidden', 'value'=>$id));    
+    echo $this->Form->end('Valider');
+    ?>
     <section class="comments">
         <?php
         foreach ($comments as $comment) {
             $option = array('body' => $comment['body'], 
                             'username' => $comment['owner']['username'],
-                            'date' => $comment['created']);
+                            'date' => $comment['created'],
+                            'id' => $comment['id']);
             echo $this->element("Comments/view", $option);    
         }
         ?>

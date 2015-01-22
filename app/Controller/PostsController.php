@@ -85,14 +85,11 @@ class PostsController extends AppController {
     // app/Controller/PostsController.php
 
 public function isAuthorized($user) {
-    // Tous les users inscrits peuvent ajouter les posts
+    // All user can add the post
     if ($this->action === 'add') {
         return true;
     }
-//if (isset($user['role']) && $user['role'] === 'admin') {
-//            return true;
-//        }
-    // Le propriétaire du post peut l'éditer et le supprimer
+    // The post owner can edit the post and delete it
     if (in_array($this->action, array('edit', 'delete'))) {
                 
         $postId = (int) $this->request->params['pass'][0];        
