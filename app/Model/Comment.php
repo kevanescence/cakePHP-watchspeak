@@ -30,5 +30,14 @@ class Comment extends AppModel {
             'fields'=> array('username','id')
         )
     );
-        
+    
+    /**
+     * Return true if the comment belongs to the given user id 
+     * @param   <int> $comment the commment id to check
+     * @param   <int> $user the user id to check
+     * @return  <bool> 
+     */
+    public function isOwnedBy($comment, $user) {
+        return $this->field('id', array('id' => $comment, 'user_id' => $user)) !== false;
+    }
 }

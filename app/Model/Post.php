@@ -71,8 +71,7 @@ class Post extends AppModel {
                 )),
             'conditions' => array('UsersFriend.user_id' => $userId,
                                   'commented_post.id' => $postId));
-        $res = $this->find('all',$options);
-        //debug($res);die();
+        $res = $this->find('all',$options);        
         return count($res) != 0;                
     }
 }
