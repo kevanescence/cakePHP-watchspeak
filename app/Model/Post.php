@@ -57,12 +57,22 @@ class Post extends AppModel {
      * @param   <int> $userId the user id to check
      * @return  <bool> 
      */    
-    public function isOwnedByAFriend($postId, $userId) {
-        $post = $this->findById($postId); 
-        return $this->field('id', array('id' => $postId, 'user_id' => $userId)) !== false;
-        debug($post);
-        debug($this->owner->friends1->find('all', array('conditions' => array('friends1.id' => 2))));
-        die();
-        //return $this->isOwnedBy($post, $user);
+    public function isOwnedByAFriend($postId, $userId) {       
+        $options =  array(            
+            'joins' => array(
+                array(
+                    'fields' => 'friends.id',
+                    'table' => 'friends',
+                    'alias' => 'UsersFriend',
+                    'type' => 'inner',
+                    'conditions' => array(
+                        'UsersFriend.friend_id = commented_post.user_id',
+                    ),
+                )),
+            'conditions' => array('UsersFriend.user_id' => $userId,
+                                  'commented_post.id' => $postId));
+        $res = $this->find('all',$options);
+        //debug($res);die();
+        return count($res) != 0;                
     }
 }

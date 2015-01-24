@@ -47,7 +47,11 @@ class CommentsController extends AppController {
     public function add() {
         $post_id = $this->request->data['Comment']['post_id'];
         $user_id = $this->Auth->user('id');
-
+//isOwnedByAFriend
+        if(!$this->Comment->commented_post->isOwnedByAFriend($post_id, $user_id)){
+            $this->Flash->setError(__("Vous ne pouvez pas commenter ce post"));
+            return $this->redirect($this->referer());
+        }
         if ($this->request->is('post')) {
 
             //The user is not authorized to comment the given post
