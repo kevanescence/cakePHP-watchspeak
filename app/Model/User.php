@@ -127,6 +127,7 @@ class User extends AppModel {
         $option =  array(            
             'joins' => array(
                 array(
+                    'fields' => 'friends.id',
                     'table' => 'friends',
                     'alias' => 'UsersFriend',
                     'type' => 'inner',

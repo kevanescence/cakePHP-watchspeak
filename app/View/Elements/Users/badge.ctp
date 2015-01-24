@@ -2,12 +2,12 @@
 /** parameter lists:
  *          - $username     : the username
  *          - $id           : the user id
- *          - $userAction   : [delete|add] determines if the element has to
- *                           display a delete friend or add friend link. 
+ *          - $isFriend     : [null|true|false] determines if the element has to
+ *                              display a delete friend or add friend link.
  */
 ?>
 <?php
-    //For compatibility purpose
+    //What kind of button should we display ?
     $userAction = "";
     if(!isset($isFriend)) {
         $userAction = "";
