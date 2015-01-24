@@ -1,13 +1,14 @@
 <?php
 //Display posts
-foreach ($posts as $post):
+foreach ($posts as $post):   
     $option = array(
         'message' => $post['UserPosts']['body'],
         'author' => $post['owner']['username'],
         'author_id' => $post['owner']['id'],
         'created' => $post['UserPosts']['created'],
         'id' => $post['UserPosts']['id'],
-        'nbComments' => $post['UserPosts']['nbComments']
+        'nbComments' => $post['UserPosts']['nbComments'],
+        'comments' => $post['post_comments']
     );
     echo $this->element('Posts/view', $option);
 endforeach;

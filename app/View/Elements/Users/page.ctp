@@ -1,10 +1,11 @@
 <?php
 //Display friends
-foreach ($users as $user) {            
+foreach ($users as $user) {                
     echo $this->element('Users/badge',
-                        array('username' => $user['friends1']['username'],
-                              'id' => $user['friends1']['id'],
-                              'userAction' => 'delete',
+                        array('username' => $user['friends']['username'],
+                              'id' => $user['friends']['id'],
+                              'userAction' => "",
+                              'isFriend' => null,
                               'cssClass' => 'col-lg-2 col-md-3 col-sm-4 col-xs-6 '));
 }
 
@@ -26,6 +27,6 @@ $this->Paginator->options(array(
 echo $this->element("UI/pagination", array(
     "nbElem" => count($users),
     "class" => "pagination-md col-lg-12 col-md-12 col-sm-12 col-xs-12",
-    "model" => "friends1",
+    "model" => "friends",
     "emptyMessage" => "Pas d'ami"));
 ?>

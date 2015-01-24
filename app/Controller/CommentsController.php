@@ -15,8 +15,9 @@ App::uses('AppController', 'Controller');
 class CommentsController extends AppController {
 
     public function isAuthorized($user) {
-        //TODO: check user is a friend
-        if ($this->action === 'add') {
+        $user_id = $this->Auth->user('id');
+        //TODO: check user is a friend or self user
+        if ($this->action === 'add') {            
             return true;
         }
         //TODO: The owner of the comment or the owner of the post can delete the comment

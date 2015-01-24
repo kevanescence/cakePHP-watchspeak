@@ -8,8 +8,16 @@
 ?>
 <?php
     //For compatibility purpose
-    if(!isset($userAction)) {
+    $userAction = "";
+    if(!isset($isFriend)) {
+        $userAction = "";
+    }
+    else if(!$isFriend) {
         $userAction = "add";
+    }
+    else if($isFriend  
+                || AuthComponent::user('role') == 'admin'){
+        $userAction = "delete";
     }
 ?>
 <div class="<?= $cssClass ?> user-badge">
@@ -34,18 +42,20 @@
             $css .= 'btn-primary btn-add-friend';
             $tmpAction = "addFriend";
             $textButton = "Ajouter en ami";
-        } else {
+        } else if($userAction == "delete") {
             $tmpAction = "deleteFriend";
             $css .= 'btn-danger btn-delete-friend';
             $textButton = "Supprimer des amis";
         }
-        echo $this->Form->create('User', array('controller' => 'users',
-            'action' => $tmpAction));
-        echo $this->Form->input('friends1.receives_id', array('type' => 'hidden',
-            'value' => $id));
-        echo $this->Form->input('id', array('type' => 'hidden',
-            'value' => AuthComponent::user('id')));
-        echo $this->Form->end(array('label' => $textButton, 'class' => $css));
+        if($userAction != "") {
+            echo $this->Form->create('User', array('controller' => 'users',
+                'action' => $tmpAction));
+            echo $this->Form->input('friends.friend_id', array('type' => 'hidden',
+                'value' => $id));
+            echo $this->Form->input('id', array('type' => 'hidden',
+                'value' => AuthComponent::user('id')));
+            echo $this->Form->end(array('label' => $textButton, 'class' => $css));
+        }
     }
     ?>
 </div>

@@ -86,15 +86,25 @@ class User extends AppModel {
             'className' => 'Comment',
             'order' => array('id' => 'DESC')            
         )
+//        'ReceivedFR' => array(
+//            'className' => 'Friend',
+//            'foreignKey' => 'receives_id',
+//            'order' => array('id' => 'DESC')
+//        ),//Sent Friend request
+//        'SentFR' => array(
+//            'className' => 'Friend',
+//            'foreignKey' => 'sends_id',
+//            'order' => array('id' => 'DESC')
+//        )
     );
     
     public $hasAndBelongsToMany = array(
-        'friends1' =>
+        'friends' =>
             array(
                 'className' => 'User',
                 'joinTable' => 'friends',
-                'foreignKey' => 'sends_id',
-                'associationForeignKey' => 'receives_id',
+                'foreignKey' => 'user_id',
+                'associationForeignKey' => 'friend_id',
                 'unique' => false
             )
     );
@@ -113,9 +123,20 @@ class User extends AppModel {
      * Return true if the  User as the given user as friend
      * @param type $idFriend the id of the userr to check
      */
-    public function hasFriend($idFriend) {
-        debug($this);
-        return false;
+    public function hasFriend($idUser, $idFriend) {
+        $option =  array(            
+            'joins' => array(
+                array(
+                    'table' => 'friends',
+                    'alias' => 'UsersFriend',
+                    'type' => 'inner',
+                    'conditions' => array(
+                        'UsersFriend.friend_id = friends.id',
+                    ),
+                )),
+            'conditions' => array('UsersFriend.user_id' => $idUser,
+                                  'friends.id' => $idFriend));
+        return count($this->friends->find('all',$option)) == true;                
     }
 }
 

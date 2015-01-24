@@ -11,7 +11,7 @@ class UsersController extends AppController {
             'order' => array(
                 'Post.id' => 'desc'),
         ),
-        'friends1' => array(
+        'friends' => array(
             'limit' => 2,
             'joins' => array(
                 array(
@@ -19,7 +19,7 @@ class UsersController extends AppController {
                     'alias' => 'UsersFriend',
                     'type' => 'inner',
                     'conditions' => array(
-                        'UsersFriend.receives_id = friends1.id',
+                        'UsersFriend.user_id = friends.id',
                     ),
                 ),
                 array(
@@ -27,7 +27,7 @@ class UsersController extends AppController {
                     'alias' => 'User',
                     'type' => 'inner',
                     'conditions' => array(
-                        'User.id = UsersFriend.sends_id',
+                        'User.id = UsersFriend.user_id',
                         'User.id' => 3
                     )
                 )
@@ -63,7 +63,7 @@ class UsersController extends AppController {
     public function addFriend() {
 
         //Check the given user id existance
-        $id = $this->request->data['friends1']['receives_id'];
+        $id = $this->request->data['friends']['friend_id'];
         $this->User->id = $id;
         if (!isset($id) || !$this->User->exists()) {
             throw new NotFoundException(__('User invalide'));
@@ -71,8 +71,8 @@ class UsersController extends AppController {
         
         //Avoid additional fields as we won't perform checkings
         $safe_data = array(
-            'friends1' => array(
-                'receives_id' => $this->request->data['friends1']['receives_id']
+            'friends' => array(
+                'friend_id' => $this->request->data['friends']['friend_id']
             ),
             'User' => array(
                 'id' => $this->request->data['User']['id']
@@ -80,8 +80,8 @@ class UsersController extends AppController {
 
         if ($this->User->save($safe_data, false)) {
             //Save relation in the other way
-            $safe_data['friends1']['receives_id'] = $this->request->data['User']['id'];
-            $safe_data['User']['id'] =  $this->request->data['friends1']['receives_id'];            
+            $safe_data['friends']['friend_id'] = $this->request->data['User']['id'];
+            $safe_data['User']['id'] =  $this->request->data['friends']['friend_id'];            
             $this->User->save($safe_data, false);
             return $this->redirect(array('controller' => 'users',
                         'action' => 'view', $id, 'infos'));
@@ -96,7 +96,7 @@ class UsersController extends AppController {
      */
     public function deleteFriend() {             
         
-        $target_id = $this->request->data['friends1']['receives_id'];
+        $target_id = $this->request->data['friends']['friend_id'];
         $user_id = $this->request->data['User']['id'];        
         
         //Secu: avoid SQL injection
@@ -105,8 +105,8 @@ class UsersController extends AppController {
         }
         
         //TODO: find a better way to manage self HATBM delete
-        $condition  = "sends_id ='$target_id' and receives_id = '$user_id' ";
-        $condition .= "or sends_id ='$user_id' and receives_id = '$target_id'";
+        $condition  = "friend_id ='$target_id' and user_id = '$user_id' ";
+        $condition .= "or friend_id ='$user_id' and user_id = '$target_id'";
         $this->User->query("delete from friends where " . $condition);
         //TODO: what happen if delete did not work ?
         $this->Flash->setValidation('Cette personne a été retirée de vos amis');
@@ -160,38 +160,47 @@ class UsersController extends AppController {
         //Checks the user existance
         if (!$this->User->exists()) {
             throw new NotFoundException(__('User invalide'));
-        }        
+        }
+                
         $this->set('id_user', $this->User->id);
         $this->set('onglet', $tab);
-        $condition = array('User.id' => $id);
-        $this->paginate['friends1']['joins'][1]['conditions'] = array(
-            'User.id = UsersFriend.sends_id',
-            'User.id' => $id
-        );
-        $this->set('user', $this->User->read(null, $id));
+        $this->set('user', $this->User->read(null, $id));        
+        $this->User->UserPosts->recursive = 2;
         if ($this->request->is('ajax')) {
-
             if ($tab == 'friends') {
-                $this->Paginator->settings = array_merge($this->paginate['friends1'], $condition);
-                $this->set('friends', $this->Paginator->paginate('friends1'));
-                $this->set('user', $this->User->read(null, $id));
+                $this->configurePageFriend($id);
                 $this->render('page_friends', 'ajax');
             } elseif ($tab == 'publications') {
-                $this->Paginator->settings = array_merge(
-                        $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $this->User->id))
-                );
-                $this->set('posts', $this->Paginator->paginate('UserPosts'));
+                $this->configurePagePost();
                 $this->render('page_posts', 'ajax');
             }
         } else {
-            $this->Paginator->settings = array_merge(
-                    $this->paginate['UserPosts'], array('conditions' => array('UserPosts.user_id' => $this->User->id))
-            );
-            $this->set('posts', $this->Paginator->paginate('UserPosts'));
-            $this->Paginator->settings = array_merge(
-                    $this->paginate['friends1'], $condition);
-            $this->set('friends', $this->Paginator->paginate('friends1'));
+            $this->set('isFriend', $this->User->hasFriend($id, $this->Auth->user('id')));
+            $this->configurePagePost();
+            $this->configurePageFriend($id);
         }
+    }
+        
+    private function configurePagePost() {
+        $this->Paginator->settings 
+                = array_merge($this->paginate['UserPosts'],
+                  array('conditions' => array('UserPosts.user_id' => $this->User->id)));            
+       $this->set('posts', $this->Paginator->paginate('UserPosts'));
+    }
+    
+    /**
+     * Configure the friend pagination for the give user id
+     * @param type $id
+     */
+    private function configurePageFriend($id) {
+        $this->paginate['friends']['joins'][1]['conditions'] = array(
+            'User.id = UsersFriend.friend_id',
+            'User.id' => $id
+        );
+        $condition = array('User.id' => $id);
+        $this->Paginator->settings = array_merge(
+                    $this->paginate['friends'], $condition);
+        $this->set('friends', $this->Paginator->paginate('friends'));
     }
 
     /**
