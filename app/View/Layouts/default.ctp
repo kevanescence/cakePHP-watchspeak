@@ -60,10 +60,11 @@
       </div>
         
     </div>    
-     
-        <?php echo $this->fetch("content"); ?>
+      <div class="content-wrapper container">
+     <?php echo $this->fetch("content"); ?>
+        </div>
 
-    </div><!-- /.container -->    
+    <!--</div> /.container -->    
     <!-- Bootstrap and other plugins -->    
     <?php echo $this->Html->script("bootstrap.min");?>
     <?php echo $this->Html->script("common");?>

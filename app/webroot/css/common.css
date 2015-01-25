@@ -3,7 +3,6 @@
     Author     : kremy
 */
 body {
-    padding-top:70px;
 }
 
 .navbar form legend, .navbar form label, .navbar form div.alert{
@@ -12,7 +11,17 @@ body {
 .navbar form input {
     margin-left: 5px; //TOBE imrpoved
 }
-
+div.content-wrapper.container {
+    width: 100%;
+    background-image: url("/watchspeak/img/bg-left-side.jpg"), url("/watchspeak/img/bg-right-side.jpg");
+    background-position: left, right;    
+    background-repeat: repeat-y;    
+    background-size: auto;
+    padding-top: 10px;
+    padding-left: 82px;/* width of the left background */
+    padding-right: 82px; /* width of the right background */
+    margin-top: 50px; /* height of the navbars */
+}
 /****************************** Ajax loading tools ****************************/
 #busy-indicator { display:none; }
 /****************************** Flash message tools ***************************/
