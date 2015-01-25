@@ -2,24 +2,50 @@
     Created on : 15 août 2014, 17:15:58
     Author     : kremy
 */
-body {
+html{
+    min-height: 100%;    
 }
 
+body {
+    height: 100% !important;       
+    
+}
 .navbar form legend, .navbar form label, .navbar form div.alert{
     display: none;
 }
 .navbar form input {
     margin-left: 5px; //TOBE imrpoved
 }
-div.content-wrapper.container {
-    width: 100%;
-    background-image: url("/watchspeak/img/bg-left-side.jpg"), url("/watchspeak/img/bg-right-side.jpg");
+div#left-side, div#right-side {
+           
+    background-repeat: repeat-y;    
+    background-size: auto;
+    /*background-attachment: fixed;*/
+    min-height: 100%;
+    width:82px;
+    position:fixed;        
+}
+div#right-side {
+    background-image: url("/watchspeak/img/bg-right-side.jpg");
+    right: 0px;
+    top:0px;
+}
+div#left-side {
+    background-image: url("/watchspeak/img/bg-left-side.jpg");    
+    left: 0px;
+}
+div.content-wrapper.container {  
+    width: auto;
+    height: 100%;
+    background-image: url("/watchspeak/img/bg-left-side.jpg"),
+                      url("/watchspeak/img/bg-right-side.jpg");
     background-position: left, right;    
     background-repeat: repeat-y;    
     background-size: auto;
+    background-attachment: fixed;
     padding-top: 10px;
-    padding-left: 82px;/* width of the left background */
-    padding-right: 82px; /* width of the right background */
+    margin-left: 82px;/* width of the left background */
+    margin-right: 82px; /* width of the right background */
     margin-top: 50px; /* height of the navbars */
 }
 /****************************** Ajax loading tools ****************************/

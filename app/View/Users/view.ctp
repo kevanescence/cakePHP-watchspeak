@@ -1,5 +1,6 @@
 <?php $this->append("css", $this->Html->css("Posts/posts")); ?>
-<ul class="nav nav-tabs container" role="tablist">  
+<ul class="nav nav-tabs container" role="tablist">
+    <h2> Page de <?= $user['User']['username'] ?></h2>
     <li class="<?php if ($onglet === "infos") echo "active " ?>">
         <a href="#infos" role="tab" data-toggle="tab">Infos</a>
     </li>

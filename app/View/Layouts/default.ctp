@@ -32,13 +32,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Watchspeak</a>
+          <a class="navbar-brand" href="#">Watchspeak</a>                    
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <?= $this->Html->link("Home", array('controller'=>'Posts','action'=>'index'))?>
-                </li>
                 <?php            
                     if($this->Session->read('Auth.User.username')){
                         $option =  array(
@@ -46,7 +43,36 @@
                                     'action' => 'logout',
                                     'class' => ''
                                     );
-                        echo $this->Html->tag("li",$this->Html->link('Déconnexion',$option));              
+                        $logout_link = $this->Html->tag("li",$this->Html->link('Déconnexion',$option));   
+                    ?>
+                    <li>
+                    <?= $this->Html->link("A la une", array('controller'=>'Posts','action'=>'index'))?>
+                    </li>
+                    <li class="dropdown">
+                        <?php
+                            $option =  array(
+                                    'controller' => 'Users',
+                                    'action' => 'view',
+                                    $this->Session->read('Auth.User.id')                                    
+                                    );
+                            $user_link =  $this->Html->url($option);
+                        ?>
+                        <a style="padding:0 !important;" href="#" class="dropdown-toggle"
+                           data-toggle="dropdown" role="button" 
+                           aria-expanded="false">
+                            <img class="img-circle" src="http://lorempixel.com/50/50/"/>
+                            <?= AuthComponent::user('username') ?>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="<?= $user_link ?>">Mes informations</a></li>
+                            <li><a href="<?= $user_link . '/publications' ?>">Mes publications</a></li>
+                            <li><a href="<?= $user_link . '/friends'?>">Mes amis</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><?= $logout_link ?></a></li>    
+                        </ul>
+                    </li>
+                    <?php         
                     }
                 ?>
             </ul>
@@ -59,10 +85,12 @@
         </div><!--/.nav-collapse -->
       </div>
         
-    </div>    
+    </div>
+      <div id="left-side"></div>
       <div class="content-wrapper container">
      <?php echo $this->fetch("content"); ?>
-        </div>
+      </div>
+      <div id="right-side"></div>
 
     <!--</div> /.container -->    
     <!-- Bootstrap and other plugins -->    
